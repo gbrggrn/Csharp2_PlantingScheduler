@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace Csharp2_PlantingScheduler.Control
 {
+    [Serializable]
     class PlantManager : IObservableCollectionManager<Plant>
     {
         public PlantManager()

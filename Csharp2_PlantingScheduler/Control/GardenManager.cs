@@ -6,10 +6,12 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Csharp2_PlantingScheduler.Control
 {
+    [Serializable]
     class GardenManager : IObservableCollectionManager<Garden>
     {
         public GardenManager()
