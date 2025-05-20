@@ -1,15 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Csharp2_PlantingScheduler.Control.Interfaces
 {
-    class IObservableCollectionManager<T>
+    internal interface IObservableCollectionManager<T>
     {
-        void Add(T item) { }
-        void Remove(int index, T item) { }
-        void Edit(int index, T item) { }
+        //Methods
+        bool Add(T type);
+        bool Replace(ObservableCollection<T> collectionIn);
+        bool ChangeAt(T type, int indexIn);
+        bool CheckIndex(int indexIn);
+        void DeleteAll();
+        bool DeleteAt(T typeIn);
+        T GetAt(int indexIn);
+
+        //Properties
+        int Count { get; }
+        ObservableCollection<T> Collection { get; }
     }
 }

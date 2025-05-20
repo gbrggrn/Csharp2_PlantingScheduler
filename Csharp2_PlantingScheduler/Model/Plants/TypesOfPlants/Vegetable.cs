@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Csharp2_PlantingScheduler.Model
 {
-    class Vegetable
+    class Vegetable : Plant
     {
     }
 }
