@@ -8,5 +8,8 @@ namespace Csharp2_PlantingScheduler.Model
 {
     class Plant
     {
+        public string Name { get; set; } = string.Empty;
+        public Enums.PlantCategory Category { get; set; }
+        public Enums.GrowthType GrowthType { get; set; }
     }
 }
