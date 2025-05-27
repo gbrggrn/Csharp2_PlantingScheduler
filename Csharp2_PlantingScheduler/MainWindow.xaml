@@ -7,6 +7,81 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="200"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Menu Bar -->
+        <Menu Grid.Row="0" x:Name="mnuFile" Height="20" Width="75" HorizontalAlignment="Left" VerticalAlignment="Center">
+            <MenuItem Header="_File" Margin="20,0,0,0" FontSize="14" FontFamily="Calibri">
+                <MenuItem Header="_New" Click="New_Click"/>
+                <MenuItem Header="_Open">
+                    <MenuItem Header="_Text File" Click="OpenTxt_Click"/>
+                    <MenuItem Header="_Json" Click="OpenJson_Click"/>
+                </MenuItem>
+                <MenuItem Header="_Save" Click="Save_Click"/>
+                <MenuItem Header="_Save as">
+                    <MenuItem Header="_Text File" Click="SaveAsTxt_Click"/>
+                    <MenuItem Header="_Json" Click="SaveAsJson_Click"/>
+                </MenuItem>
+                <Separator/>
+                <MenuItem Header="_XML">
+                    <MenuItem Header="_Save food items" Click="SaveXML_Click"/>
+                    <MenuItem Header="_Open food items" Click="OpenXML_Click"/>
+                </MenuItem>
+                <MenuItem Header="_Exit" Click="ExitButton_Click"/>
+            </MenuItem>
+        </Menu>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Input controls -->
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                </Grid.RowDefinitions>
+                <Button Grid.Row="0" x:Name="addGardenBtn" Content="Add Garden" Margin="10"/>
+                <Button Grid.Row="1" x:Name="addPlantBtn" Content="Add Plant" Margin="10"/>
+                <Button Grid.Row="2" x:Name="editBtn" Content="Edit" Margin="10"/>
+                <Button Grid.Row="3" x:Name="deleteBtn" Content="Delete" Margin="10"/>
+            </Grid>
+
+            <!-- Garden Listview -->
+            <ListView Grid.Column="1" Margin="10"
+                      x:Name="gardenLstView"
+                      ItemsSource="{Binding GardensPlantsObserver}"
+                      SelectedItem="{Binding }">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Name" Width="125" DisplayMemberBinding="{Binding }"/>
+                        <GridViewColumn Header="Zone" Width="100" DisplayMemberBinding="{Binding }"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+            <!-- Plants ListView -->
+            <ListView Grid.Column="2" Margin="10"
+                    x:Name="plantsLstView"
+                    ItemsSource="{Binding GardensPlantsObserver}"
+                    SelectedItem="{Binding }">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Name" Width="125" DisplayMemberBinding="{Binding }"/>
+                        <GridViewColumn Header="Type" Width="100" DisplayMemberBinding="{Binding }"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Grid>
 
     </Grid>
 </Window>
