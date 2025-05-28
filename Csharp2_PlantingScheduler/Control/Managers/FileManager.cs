@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Csharp2_PlantingScheduler.Control
+namespace Csharp2_PlantingScheduler.Control.Managers
 {
     class FileManager
     {

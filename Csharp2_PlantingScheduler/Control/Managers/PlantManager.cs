@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Csharp2_PlantingScheduler.Control
+namespace Csharp2_PlantingScheduler.Control.Managers
 {
     [Serializable]
     class PlantManager : IObservableCollectionManager<Plant>
@@ -23,7 +23,7 @@ namespace Csharp2_PlantingScheduler.Control
         public ObservableCollection<Plant> Collection { get; }
 
         //Methods
-        public bool Add(Plant plantIn) 
+        public bool Add(Plant plantIn)
         {
             throw new NotImplementedException();
         }

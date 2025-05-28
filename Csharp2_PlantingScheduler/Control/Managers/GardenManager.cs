@@ -9,7 +9,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace Csharp2_PlantingScheduler.Control
+namespace Csharp2_PlantingScheduler.Control.Managers
 {
     [Serializable]
     class GardenManager : IObservableCollectionManager<Garden>
