@@ -4,18 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Csharp2_PlantingScheduler.Model
+namespace Csharp2_PlantingScheduler.Model.Plants.TypesOfPlants.Vegetable
 {
-    class Flower : Plant
+    class Vegetable : Plant
     {
         public string SpeciesName { get; set; } = string.Empty;
-        public int WeeksToHarvest { get; set; }
+        public Enums.VegetableType Type { get; set; } = Enums.VegetableType.Unknown;
         public Enums.SowType SowType { get; set; }
         public bool IsFrostTolerant { get; set; }
         public int MaxNegativeDegrees { get; set; }
+        public bool ShouldStartIndoors { get; set; }
         public bool NeedsTransplant { get; set; }
-        public int AmountOfTransplants { get; set; }
-        public bool ShouldTrellis {  get; set; }
+        public int TransplantIntervalInWeeks { get; set; }
+        public bool ShouldTrellis { get; set; }
         public int TrellisIntervalInWeeks { get; set; }
     }
 }

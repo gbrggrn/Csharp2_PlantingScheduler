@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Csharp2_PlantingScheduler.Model
 {
-    class Enums
+    public class Enums
     {
         public enum PlantCategory
         {
@@ -35,6 +35,7 @@ namespace Csharp2_PlantingScheduler.Model
         public enum VegetableType
         {
             Unknown,
+            Radish,
             Onion,
             Aubergine,
             Beet,
@@ -46,7 +47,6 @@ namespace Csharp2_PlantingScheduler.Model
             Salad,
             Leaf,
             Pumpkin,
-            Radish,
             Squash,
             Zucchini,
             Chili,
@@ -58,16 +58,32 @@ namespace Csharp2_PlantingScheduler.Model
 
         public enum GrowZone
         {
-            Zone1,
-            Zone2,
-            Zone3,
-            Zone4,
-            Zone5,
-            Zone6,
-            Zone7,
-            Zone8,
-            Zone9,
-            Mountain
+            Zone1 = -4,
+            Zone2 = -2,
+            Zone3 = -1,
+            Zone4 =  0,
+            Zone5 = +1,
+            Zone6 = +2,
+            Zone7 = +3,
+            Zone8 = +4,
+            Zone9 = +5,
+            Mountain = +6
+        }
+
+        public enum Months
+        {
+            Jan,
+            Feb,
+            Mar,
+            Apr,
+            May,
+            Jun,
+            Jul,
+            Aug,
+            Oct,
+            Sep,
+            Nov,
+            Dec
         }
     }
 }

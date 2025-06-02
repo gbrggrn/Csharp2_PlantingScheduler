@@ -16,22 +16,22 @@
         <!-- Menu Bar -->
         <Menu Grid.Row="0" x:Name="mnuFile" Height="20" Width="75" HorizontalAlignment="Left" VerticalAlignment="Center">
             <MenuItem Header="_File" Margin="20,0,0,0" FontSize="14" FontFamily="Calibri">
-                <MenuItem Header="_New" Click="New_Click"/>
+                <MenuItem Header="_New"/>
                 <MenuItem Header="_Open">
-                    <MenuItem Header="_Text File" Click="OpenTxt_Click"/>
-                    <MenuItem Header="_Json" Click="OpenJson_Click"/>
+                    <MenuItem Header="_Text File"/>
+                    <MenuItem Header="_Json"/>
                 </MenuItem>
-                <MenuItem Header="_Save" Click="Save_Click"/>
+                <MenuItem Header="_Save"/>
                 <MenuItem Header="_Save as">
-                    <MenuItem Header="_Text File" Click="SaveAsTxt_Click"/>
-                    <MenuItem Header="_Json" Click="SaveAsJson_Click"/>
+                    <MenuItem Header="_Text File"/>
+                    <MenuItem Header="_Json"/>
                 </MenuItem>
                 <Separator/>
                 <MenuItem Header="_XML">
-                    <MenuItem Header="_Save food items" Click="SaveXML_Click"/>
-                    <MenuItem Header="_Open food items" Click="OpenXML_Click"/>
+                    <MenuItem Header="_Save food items"/>
+                    <MenuItem Header="_Open food items"/>
                 </MenuItem>
-                <MenuItem Header="_Exit" Click="ExitButton_Click"/>
+                <MenuItem Header="_Exit"/>
             </MenuItem>
         </Menu>
 
@@ -59,12 +59,11 @@
             <!-- Garden Listview -->
             <ListView Grid.Column="1" Margin="10"
                       x:Name="gardenLstView"
-                      ItemsSource="{Binding GardensPlantsObserver}"
-                      SelectedItem="{Binding }">
+                      ItemsSource="{Binding GardensPlantsObserver}">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="Name" Width="125" DisplayMemberBinding="{Binding }"/>
-                        <GridViewColumn Header="Zone" Width="100" DisplayMemberBinding="{Binding }"/>
+                        <GridViewColumn Header="Name" Width="125" DisplayMemberBinding="{Binding Gardens.Name}"/>
+                        <GridViewColumn Header="Zone" Width="100" DisplayMemberBinding="{Binding Gardens.Zone}"/>
                     </GridView>
                 </ListView.View>
             </ListView>
@@ -72,16 +71,20 @@
             <!-- Plants ListView -->
             <ListView Grid.Column="2" Margin="10"
                     x:Name="plantsLstView"
-                    ItemsSource="{Binding GardensPlantsObserver}"
-                    SelectedItem="{Binding }">
+                    ItemsSource="{Binding GardensPlantsObserver}">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="Name" Width="125" DisplayMemberBinding="{Binding }"/>
-                        <GridViewColumn Header="Type" Width="100" DisplayMemberBinding="{Binding }"/>
+                        <GridViewColumn Header="Name" Width="125" DisplayMemberBinding="{Binding Plants.Name}"/>
+                        <GridViewColumn Header="Type" Width="100" DisplayMemberBinding="{Binding Plants.Type}"/>
                     </GridView>
                 </ListView.View>
             </ListView>
         </Grid>
+        
+        <!-- Schedule Display -->
+        <ScrollViewer Grid.Row="2" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+            <Grid x:Name="ScheduleGrid"/>
+        </ScrollViewer>
 
     </Grid>
 </Window>
