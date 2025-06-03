@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Csharp2_PlantingScheduler.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,14 @@ namespace Csharp2_PlantingScheduler
         public GardenWindow()
         {
             InitializeComponent();
+        }
+
+        private void ExitBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (MessageBoxes.DisplayQuestion("Are you sure? Unsaved changes will be lost", "Are you sure?"))
+            {
+                this.Close();
+            }
         }
     }
 }
