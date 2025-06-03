@@ -5,11 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Csharp2_PlantingScheduler"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="700" Width="1000">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
-            <RowDefinition Height="200"/>
+            <RowDefinition Height="250"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -49,11 +49,13 @@
                     <RowDefinition Height="50"/>
                     <RowDefinition Height="50"/>
                     <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
                 </Grid.RowDefinitions>
                 <Button Grid.Row="0" x:Name="addGardenBtn" Content="Add Garden" Margin="10"/>
                 <Button Grid.Row="1" x:Name="addPlantBtn" Content="Add Plant" Margin="10"/>
                 <Button Grid.Row="2" x:Name="editBtn" Content="Edit" Margin="10"/>
                 <Button Grid.Row="3" x:Name="deleteBtn" Content="Delete" Margin="10"/>
+                <Button Grid.Row="4" x:Name="generateBtn" Content="Generate Schedule" Margin="10" Click="generateBtn_Click"/>
             </Grid>
 
             <!-- Garden Listview -->
@@ -62,7 +64,7 @@
                       ItemsSource="{Binding GardensPlantsObserver}">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="Name" Width="125" DisplayMemberBinding="{Binding Gardens.Name}"/>
+                        <GridViewColumn Header="Gardens" Width="125" DisplayMemberBinding="{Binding Gardens.Name}"/>
                         <GridViewColumn Header="Zone" Width="100" DisplayMemberBinding="{Binding Gardens.Zone}"/>
                     </GridView>
                 </ListView.View>
@@ -74,7 +76,7 @@
                     ItemsSource="{Binding GardensPlantsObserver}">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="Name" Width="125" DisplayMemberBinding="{Binding Plants.Name}"/>
+                        <GridViewColumn Header="Plants" Width="125" DisplayMemberBinding="{Binding Plants.Name}"/>
                         <GridViewColumn Header="Type" Width="100" DisplayMemberBinding="{Binding Plants.Type}"/>
                     </GridView>
                 </ListView.View>
@@ -82,8 +84,9 @@
         </Grid>
         
         <!-- Schedule Display -->
-        <ScrollViewer Grid.Row="2" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+        <ScrollViewer Grid.Row="2" Margin="10" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
             <Grid x:Name="ScheduleGrid"/>
+            <!-- Content added programmatically -->
         </ScrollViewer>
 
     </Grid>

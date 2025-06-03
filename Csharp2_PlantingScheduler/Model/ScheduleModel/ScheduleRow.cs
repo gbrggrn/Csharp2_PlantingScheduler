@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Csharp2_PlantingScheduler.Model.ScheduleModel
 {
-    internal class ScheduleRow
+    public class ScheduleRow
     {
-        public string VegetableTypeDisplay { get; set; } = string.Empty;
-        public string VegetableNameDisplay { get; set; } = string.Empty;
+        public string TypeDisplay { get; set; } = string.Empty;
+        public string NameDisplay { get; set; } = string.Empty;
         public int WeeksToHarvestDisplay { get; set; }
         public int StartWeek {  get; set; }
         public int EndWeek { get; set; }

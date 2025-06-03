@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Csharp2_PlantingScheduler.Model
 {
-    class Garden
+    public class Garden
     {
         public Enums.GrowZone Zone { get; set; }
         public string GardenName { get; set; } = string.Empty;

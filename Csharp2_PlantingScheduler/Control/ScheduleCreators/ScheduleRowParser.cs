@@ -12,18 +12,9 @@ using System.Threading.Tasks;
 
 namespace Csharp2_PlantingScheduler.Control.ScheduleCreators
 {
-    internal class ScheduleRowParser
+    public static class ScheduleRowParser
     {
-        private Garden garden;
-        private List<Plant> plants;
-
-        public ScheduleRowParser(Garden gardenIn, List<Plant> plantsIn)
-        {
-            garden = gardenIn;
-            plants = plantsIn;
-        }
-
-        private List<ScheduleRow> ParseToRows()
+        public static List<ScheduleRow> ParseToRows(Garden garden, List<Plant> plants)
         {
             List<ScheduleRow> parsedRows = [];
 
@@ -35,7 +26,7 @@ namespace Csharp2_PlantingScheduler.Control.ScheduleCreators
                     int endWeek = 0;
                     int weeksToHarvest = 0;
 
-                    if (VegetableDataMap.MetaData.TryGetValue(veg.Type, out VegetableMetaData metaData))
+                    if (VegetableDataMap.MetaData.TryGetValue(veg.Type, out VegetableMetaData? metaData))
                     {
                         startWeek = metaData.BaseStartWeek;
                         endWeek = startWeek + metaData.WeeksToHarvest;
@@ -49,8 +40,8 @@ namespace Csharp2_PlantingScheduler.Control.ScheduleCreators
                     //Create a schedule row
                     ScheduleRow scheduleRow = new()
                     {
-                        VegetableTypeDisplay = veg.Type.ToString(),
-                        VegetableNameDisplay = veg.SpeciesName,
+                        TypeDisplay = veg.Type.ToString(),
+                        NameDisplay = veg.SpeciesName,
                         WeeksToHarvestDisplay = weeksToHarvest,
                         StartWeek = startWeek,
                         EndWeek = endWeek

@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace Csharp2_PlantingScheduler
 {
     /// <summary>
-    /// Interaction logic for ScheduleWindow.xaml
+    /// Interaction logic for GardenWindow.xaml
     /// </summary>
-    public partial class ScheduleWindow : Window
+    public partial class GardenWindow : Window
     {
-        public ScheduleWindow()
+        public GardenWindow()
         {
             InitializeComponent();
         }
