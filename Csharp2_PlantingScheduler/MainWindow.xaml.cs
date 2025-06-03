@@ -142,10 +142,24 @@ namespace Csharp2_PlantingScheduler
 
                 for (int week = 0; week < weeksPerYear; week++)
                 {
+                    Brush cellColor = Brushes.Transparent;
+
+                    int indoorEndWeek = row.StartWeek + row.IndoorWeeks;
+
+                    //If in the indoor-period
+                    if (row.IndoorWeeks > 0 && week >= row.StartWeek && week < indoorEndWeek)
+                    {
+                        cellColor = Brushes.LightBlue;
+                    }
+                    //If transplanted outdoor
+                    else if (week >= row.StartWeek && week <= row.EndWeek)
+                    {
+                        cellColor = Brushes.LightGreen;
+                    }
+
                     Border weekCell = new()
                     {
-                        //If week is between startWeek and endWeek: add light green, else add transparent cells
-                        Background = (week >= row.StartWeek && week <= row.EndWeek) ? Brushes.LightGreen : Brushes.Transparent,
+                        Background = cellColor,
                         BorderBrush = Brushes.Gray,
                         BorderThickness = new Thickness(0.5)
                     };
@@ -184,7 +198,7 @@ namespace Csharp2_PlantingScheduler
 
         private void AddPlantBtn_Click(object sender, RoutedEventArgs e)
         {
-            PlantWindow plantWindow = new();
+            PlantWindow plantWindow = new(plantManager);
 
             plantWindow.ShowDialog();
         }

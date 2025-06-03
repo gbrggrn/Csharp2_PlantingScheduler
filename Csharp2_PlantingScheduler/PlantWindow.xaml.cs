@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Csharp2_PlantingScheduler.Control.Managers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +20,14 @@ namespace Csharp2_PlantingScheduler
     /// </summary>
     public partial class PlantWindow : Window
     {
-        public PlantWindow()
+        private PlantManager plantManager;
+
+        public PlantWindow(PlantManager currentPlantManager)
         {
             InitializeComponent();
+            plantManager = currentPlantManager;
         }
+
+
     }
 }

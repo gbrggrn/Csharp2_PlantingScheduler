@@ -61,8 +61,7 @@
             <!-- Garden Listview -->
             <ListView Grid.Column="1" Margin="10"
                       x:Name="gardenLstView"
-                      ItemsSource="{Binding GardenManager.Collection}"
-                      SelectionMode="Multiple">
+                      ItemsSource="{Binding GardenManager.Collection}">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Gardens" Width="125" DisplayMemberBinding="{Binding GardenName}"/>

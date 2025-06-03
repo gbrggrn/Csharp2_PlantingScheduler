@@ -21,32 +21,41 @@ namespace Csharp2_PlantingScheduler.Control.ScheduleCreators
             {
                 if (plant is Vegetable veg)
                 {
-                    int startWeek = 0;
-                    int endWeek = 0;
-                    int weeksToHarvest = 0;
-
                     if (VegetableDataMap.MetaData.TryGetValue(veg.Type, out VegetableMetaData? metaData))
                     {
-                        startWeek = metaData.BaseStartWeek;
-                        endWeek = startWeek + metaData.WeeksToHarvest;
-                        weeksToHarvest = metaData.WeeksToHarvest;
+                        //Fallback value 0
+                        int indoorWeeks = metaData.IndoorWeeks ?? 0;
+
+                        //Extrapolate the rest
+                        int startWeek = metaData.BaseStartWeek - indoorWeeks;
+                        //Apply zone coefficient
+                        startWeek += (int)garden.Zone;
+                        int weeksToHarvest = metaData.WeeksToHarvest;
+                        int endWeek = startWeek + weeksToHarvest;
+
+                        //If transplanting is at risk of frost damage
+                        if (indoorWeeks != 0 && startWeek + indoorWeeks < garden.FirstFrostFreeWeek)
+                        {
+                            int frostOffset = garden.FirstFrostFreeWeek - (startWeek + indoorWeeks);
+
+                            startWeek += frostOffset;
+                            endWeek += frostOffset;
+                        }
+
+                        //Create a schedule row
+                        ScheduleRow scheduleRow = new()
+                        {
+                            TypeDisplay = veg.Type.ToString(),
+                            NameDisplay = veg.SpeciesName,
+                            WeeksToHarvestDisplay = weeksToHarvest,
+                            StartWeek = startWeek,
+                            EndWeek = endWeek,
+                            IndoorWeeks = indoorWeeks
+                        };
+
+                        //Add row to list of parsed rows
+                        parsedRows.Add(scheduleRow);
                     }
-
-                    //Add zone coefficient
-                    startWeek += (int)garden.Zone;
-                    endWeek += (int)garden.Zone;
-
-                    //Create a schedule row
-                    ScheduleRow scheduleRow = new()
-                    {
-                        TypeDisplay = veg.Type.ToString(),
-                        NameDisplay = veg.SpeciesName,
-                        WeeksToHarvestDisplay = weeksToHarvest,
-                        StartWeek = startWeek,
-                        EndWeek = endWeek
-                    };
-
-                    parsedRows.Add(scheduleRow);
                 }
                 else if (plant is Flower flower)
                 {

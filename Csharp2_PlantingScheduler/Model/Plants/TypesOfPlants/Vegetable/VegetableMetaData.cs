@@ -10,5 +10,6 @@ namespace Csharp2_PlantingScheduler.Model.Plants.TypesOfPlants.Vegetable
     {
         public int BaseStartWeek { get; set; }
         public int WeeksToHarvest { get; set; }
+        public int? IndoorWeeks { get; set; }
     }
 }
