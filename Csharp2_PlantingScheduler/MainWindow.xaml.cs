@@ -91,7 +91,7 @@ namespace Csharp2_PlantingScheduler
             }
         }
 
-        private void generateBtn_Click(object sender, RoutedEventArgs e)
+        private void GenerateBtn_Click(object sender, RoutedEventArgs e)
         {
             if (gardenManager.Count > 0 && plantManager.Count > 0)
             {
@@ -165,6 +165,20 @@ namespace Csharp2_PlantingScheduler
             Grid.SetColumn(txtBlock, col);
 
             return txtBlock;
+        }
+
+        private void AddGardenBtn_Click(object sender, RoutedEventArgs e)
+        {
+            GardenWindow gardenWindow = new();
+
+            gardenWindow.ShowDialog();
+        }
+
+        private void AddPlantBtn_Click(object sender, RoutedEventArgs e)
+        {
+            PlantWindow plantWindow = new();
+
+            plantWindow.ShowDialog();
         }
     }
 }

@@ -9,13 +9,7 @@ namespace Csharp2_PlantingScheduler.Model.Plants.TypesOfPlants.Flower
     class Flower : Plant
     {
         public string SpeciesName { get; set; } = string.Empty;
-        public int WeeksToHarvest { get; set; }
+        public Enums.FlowerType FlowerType { get; set; };
         public Enums.SowType SowType { get; set; }
-        public bool IsFrostTolerant { get; set; }
-        public int MaxNegativeDegrees { get; set; }
-        public bool NeedsTransplant { get; set; }
-        public int AmountOfTransplants { get; set; }
-        public bool ShouldTrellis { get; set; }
-        public int TrellisIntervalInWeeks { get; set; }
     }
 }

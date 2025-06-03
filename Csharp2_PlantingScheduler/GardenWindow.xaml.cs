@@ -1,4 +1,5 @@
 ﻿using Csharp2_PlantingScheduler.Helpers;
+using Csharp2_PlantingScheduler.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,7 @@ namespace Csharp2_PlantingScheduler
         public GardenWindow()
         {
             InitializeComponent();
+            InitComboBoxes();
         }
 
         private void ExitBtn_Click(object sender, RoutedEventArgs e)
@@ -31,6 +33,21 @@ namespace Csharp2_PlantingScheduler
             {
                 this.Close();
             }
+        }
+
+        private void InitComboBoxes()
+        {
+            for (int i = 1; i < 52; i++)
+            {
+                firstFrostFreeComboBox.Items.Add(i);
+                lastFrostFreeComboBox.Items.Add(i);
+            }
+
+            firstFrostFreeComboBox.SelectedIndex = 0;
+            lastFrostFreeComboBox.SelectedIndex = 0;
+
+            zoneComboBox.ItemsSource = Enum.GetName(typeof(Enums.GrowZone), Name);
+            zoneComboBox.SelectedIndex = 0;
         }
     }
 }

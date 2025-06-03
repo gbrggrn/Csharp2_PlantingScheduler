@@ -11,12 +11,5 @@ namespace Csharp2_PlantingScheduler.Model.Plants.TypesOfPlants.Vegetable
         public string SpeciesName { get; set; } = string.Empty;
         public Enums.VegetableType Type { get; set; } = Enums.VegetableType.Unknown;
         public Enums.SowType SowType { get; set; }
-        public bool IsFrostTolerant { get; set; }
-        public int MaxNegativeDegrees { get; set; }
-        public bool ShouldStartIndoors { get; set; }
-        public bool NeedsTransplant { get; set; }
-        public int TransplantIntervalInWeeks { get; set; }
-        public bool ShouldTrellis { get; set; }
-        public int TrellisIntervalInWeeks { get; set; }
     }
 }

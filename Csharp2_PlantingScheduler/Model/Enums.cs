@@ -10,12 +10,8 @@ namespace Csharp2_PlantingScheduler.Model
     {
         public enum PlantCategory
         {
-            None,
-            Leafy,
-            Fruiting,
-            Root,
-            Ornamental,
-            Medicinal
+            Flower,
+            Vegetable
         }
 
         public enum GrowthType
@@ -30,6 +26,11 @@ namespace Csharp2_PlantingScheduler.Model
             Coldstart,
             Indoorstart,
             Directsow
+        }
+
+        public enum FlowerType
+        {
+            Unknown
         }
 
         public enum VegetableType

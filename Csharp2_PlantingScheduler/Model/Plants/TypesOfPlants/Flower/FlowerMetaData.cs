@@ -8,5 +8,7 @@ namespace Csharp2_PlantingScheduler.Model.Plants.TypesOfPlants.Flower
 {
     internal class FlowerMetaData
     {
+        public int BaseStartWeek { get; set; }
+        public int WeeksToHarvest { get; set; }
     }
 }
