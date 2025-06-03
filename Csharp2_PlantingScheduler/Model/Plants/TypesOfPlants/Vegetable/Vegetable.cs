@@ -9,7 +9,7 @@ namespace Csharp2_PlantingScheduler.Model.Plants.TypesOfPlants.Vegetable
     class Vegetable : Plant
     {
         public string SpeciesName { get; set; } = string.Empty;
-        public Enums.VegetableType Type { get; set; } = Enums.VegetableType.Unknown;
+        public Enums.VegetableType Type { get; set; }
         public Enums.SowType SowType { get; set; }
     }
 }

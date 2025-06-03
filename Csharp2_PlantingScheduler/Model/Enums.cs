@@ -30,12 +30,11 @@ namespace Csharp2_PlantingScheduler.Model
 
         public enum FlowerType
         {
-            Unknown
+            Lily
         }
 
         public enum VegetableType
         {
-            Unknown,
             Radish,
             Onion,
             Aubergine,

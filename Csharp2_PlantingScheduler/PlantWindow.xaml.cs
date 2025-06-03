@@ -1,4 +1,7 @@
 ﻿using Csharp2_PlantingScheduler.Control.Managers;
+using Csharp2_PlantingScheduler.Helpers;
+using Csharp2_PlantingScheduler.Model;
+using Csharp2_PlantingScheduler.Model.Plants.TypesOfPlants.Vegetable;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,13 +24,75 @@ namespace Csharp2_PlantingScheduler
     public partial class PlantWindow : Window
     {
         private PlantManager plantManager;
+        private int nameMaxChar = 30;
 
         public PlantWindow(PlantManager currentPlantManager)
         {
             InitializeComponent();
             plantManager = currentPlantManager;
+            categoryComboBox.SelectionChanged += SwitchTypesComboBox;
+            InitComboBoxes();
         }
 
+        private void InitComboBoxes()
+        {
+            categoryComboBox.ItemsSource = Enum.GetNames(typeof(Enums.PlantCategory));
+            growthTypeComboBox.ItemsSource = Enum.GetNames(typeof(Enums.GrowthType));
+            sowTypeComboBox.ItemsSource = Enum.GetNames(typeof(Enums.SowType));
 
+            categoryComboBox.SelectedIndex = 1;
+            growthTypeComboBox.SelectedIndex = 0;
+            sowTypeComboBox.SelectedIndex = 0;
+        }
+
+        private void SwitchTypesComboBox(object sender, RoutedEventArgs e)
+        {
+            if (categoryComboBox.SelectedIndex == 1)
+            {
+                typeComboBox.ItemsSource = Enum.GetNames(typeof(Enums.VegetableType));
+            }
+            else
+            {
+                typeComboBox.ItemsSource = Enum.GetNames(typeof(Enums.FlowerType));
+            }
+
+            typeComboBox.SelectedIndex = 0;
+        }
+
+        private void ExitBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (MessageBoxes.DisplayQuestion("Are you sure? Unsaved changes will be lost", "Are you sure?"))
+            {
+                this.Close();
+            }
+        }
+
+        private void saveBtn_Click(object sender, RoutedEventArgs e)
+        {
+            string name = nameTxtBox.Text;
+
+            if (!string.IsNullOrEmpty(name) && name.Length <= nameMaxChar)
+            {
+                if (categoryComboBox.SelectedIndex == 1)
+                {
+                    Vegetable vegetable = new()
+                    {
+                        SpeciesName = name,
+                        Category = (Enums.PlantCategory)Enum.Parse(typeof(Enums.PlantCategory), categoryComboBox.SelectedItem.ToString()!),
+                        GrowthType = (Enums.GrowthType)Enum.Parse(typeof(Enums.GrowthType), growthTypeComboBox.SelectedItem.ToString()!),
+                        SowType = (Enums.SowType)Enum.Parse(typeof(Enums.SowType), sowTypeComboBox.SelectedItem.ToString()!),
+                        Type = (Enums.VegetableType)Enum.Parse(typeof(Enums.VegetableType), typeComboBox.SelectedItem.ToString()!)
+                    };
+
+                    plantManager.Add(vegetable);
+
+                    MessageBoxes.DisplayInfoBox($"The {vegetable.Type.ToString()} {vegetable.SpeciesName} added!", "Success!");
+                }
+            }
+            else
+            {
+                MessageBoxes.DisplayErrorBox($"Name can not be empty and max {nameMaxChar} characters");
+            }
+        }
     }
 }

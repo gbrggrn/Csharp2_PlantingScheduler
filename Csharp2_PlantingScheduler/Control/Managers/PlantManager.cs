@@ -65,7 +65,6 @@ namespace Csharp2_PlantingScheduler.Control.Managers
             {
                 Category = Enums.PlantCategory.Vegetable,
                 GrowthType = Enums.GrowthType.Annual,
-                Name = "Svartkål",
                 SpeciesName = "Nero",
                 Type = Enums.VegetableType.Kale,
                 SowType = Enums.SowType.Coldstart
@@ -75,7 +74,6 @@ namespace Csharp2_PlantingScheduler.Control.Managers
             {
                 Category = Enums.PlantCategory.Vegetable,
                 GrowthType = Enums.GrowthType.Annual,
-                Name = "Rödbeta",
                 SpeciesName = "Detroit 2",
                 Type = Enums.VegetableType.Beet,
                 SowType = Enums.SowType.Directsow
@@ -85,7 +83,6 @@ namespace Csharp2_PlantingScheduler.Control.Managers
             {
                 Category = Enums.PlantCategory.Vegetable,
                 GrowthType = Enums.GrowthType.Annual,
-                Name = "Sallad",
                 SpeciesName = "Lollo Rossa",
                 Type = Enums.VegetableType.Salad,
                 SowType = Enums.SowType.Coldstart
@@ -95,7 +92,6 @@ namespace Csharp2_PlantingScheduler.Control.Managers
             {
                 Category = Enums.PlantCategory.Vegetable,
                 GrowthType = Enums.GrowthType.Annual,
-                Name = "Böna",
                 SpeciesName = "Långböna",
                 Type = Enums.VegetableType.Bean,
                 SowType = Enums.SowType.Coldstart
@@ -105,7 +101,6 @@ namespace Csharp2_PlantingScheduler.Control.Managers
             {
                 Category = Enums.PlantCategory.Vegetable,
                 GrowthType = Enums.GrowthType.Annual,
-                Name = "Tomat",
                 SpeciesName = "Brandywine Yellow",
                 Type = Enums.VegetableType.Tomato,
                 SowType = Enums.SowType.Indoorstart

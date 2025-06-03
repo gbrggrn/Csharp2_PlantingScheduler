@@ -10,7 +10,6 @@ namespace Csharp2_PlantingScheduler.Model.Plants.TypesOfPlants.Vegetable
     {
         public static readonly Dictionary<Enums.VegetableType, VegetableMetaData> MetaData = new()
         {
-            { Enums.VegetableType.Unknown, new VegetableMetaData {BaseStartWeek = 15, WeeksToHarvest = 10} },
             { Enums.VegetableType.Radish, new VegetableMetaData {BaseStartWeek = 9, WeeksToHarvest = 5} },
             { Enums.VegetableType.Leaf, new VegetableMetaData {BaseStartWeek = 9, WeeksToHarvest = 5 } },
             { Enums.VegetableType.Salad, new VegetableMetaData {BaseStartWeek = 13, WeeksToHarvest = 9} },

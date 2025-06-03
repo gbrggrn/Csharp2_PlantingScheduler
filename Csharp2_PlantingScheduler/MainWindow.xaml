@@ -64,8 +64,8 @@
                       ItemsSource="{Binding GardenManager.Collection}">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="Gardens" Width="125" DisplayMemberBinding="{Binding GardenName}"/>
-                        <GridViewColumn Header="Zone" Width="100" DisplayMemberBinding="{Binding Zone}"/>
+                        <GridViewColumn Header="Garden" Width="150" DisplayMemberBinding="{Binding GardenName}"/>
+                        <GridViewColumn Header="Zone" Width="150" DisplayMemberBinding="{Binding Zone}"/>
                     </GridView>
                 </ListView.View>
             </ListView>
@@ -77,8 +77,8 @@
                     SelectionMode="Multiple">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="Plants" Width="125" DisplayMemberBinding="{Binding Name}"/>
-                        <GridViewColumn Header="Type" Width="100" DisplayMemberBinding="{Binding Category}"/>
+                        <GridViewColumn Header="Species" Width="150" DisplayMemberBinding="{Binding SpeciesName}"/>
+                        <GridViewColumn Header="Type" Width="150" DisplayMemberBinding="{Binding Category}"/>
                     </GridView>
                 </ListView.View>
             </ListView>
