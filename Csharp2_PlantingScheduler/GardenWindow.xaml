@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Csharp2_PlantingScheduler"
         mc:Ignorable="d"
-        Title="GardenWindow" Height="320" Width="450">
+        Title="GardenWindow" Height="350" Width="450">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
@@ -41,6 +41,6 @@
         <ComboBox Grid.Row="4" Grid.Column="1" x:Name="lastFrostFreeComboBox" Margin="10"/>
         
         <!-- Row 5 -->
-        <Button Grid.Row="5" Grid.Column="1" x:Name="saveBtn" Content="Save" Margin="10"/>
+        <Button Grid.Row="5" Grid.Column="1" x:Name="saveBtn" Content="Save" Margin="10" Click="saveBtn_Click"/>
     </Grid>
 </Window>

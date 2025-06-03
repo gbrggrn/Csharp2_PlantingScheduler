@@ -1,5 +1,4 @@
-﻿using Csharp2_PlantingScheduler.Control.Observers;
-using Csharp2_PlantingScheduler.Model;
+﻿using Csharp2_PlantingScheduler.Model;
 using Csharp2_PlantingScheduler.Model.Plants.TypesOfPlants.Flower;
 using Csharp2_PlantingScheduler.Model.Plants.TypesOfPlants.Vegetable;
 using Csharp2_PlantingScheduler.Model.ScheduleModel;

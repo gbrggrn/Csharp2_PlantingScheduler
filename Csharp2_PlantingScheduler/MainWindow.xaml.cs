@@ -31,12 +31,20 @@ namespace Csharp2_PlantingScheduler
         private GardenManager gardenManager;
         private PlantManager plantManager;
 
+        //Properties
+        public GardenManager GardenManager => gardenManager;
+        public PlantManager PlantManager => plantManager;
+
         public MainWindow()
         {
             InitializeComponent();
             BuildScheduleSkeleton();
             gardenManager = new();
             plantManager = new();
+            gardenManager.AddTestValues();
+            plantManager.AddTestValues();
+
+            DataContext = this;
         }
 
         private void BuildScheduleSkeleton()
@@ -93,7 +101,7 @@ namespace Csharp2_PlantingScheduler
 
         private void GenerateBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (gardenManager.Count > 0 && plantManager.Count > 0)
+            if (gardenManager.Collection.Count > 0 && plantManager.Collection.Count > 0)
             {
                 if (gardenLstView.SelectedIndex != -1 && plantsLstView.SelectedIndex != -1)
                 {
@@ -111,7 +119,7 @@ namespace Csharp2_PlantingScheduler
             }
             else
             {
-                MessageBoxes.DisplayErrorBox("You need to add both a garden and plants")
+                MessageBoxes.DisplayErrorBox("You need to add both a garden and plants");
             }
         }
 
@@ -134,7 +142,7 @@ namespace Csharp2_PlantingScheduler
 
                 for (int week = 0; week < weeksPerYear; week++)
                 {
-                    Border weekCell = new Border
+                    Border weekCell = new()
                     {
                         //If week is between startWeek and endWeek: add light green, else add transparent cells
                         Background = (week >= row.StartWeek && week <= row.EndWeek) ? Brushes.LightGreen : Brushes.Transparent,
@@ -169,7 +177,7 @@ namespace Csharp2_PlantingScheduler
 
         private void AddGardenBtn_Click(object sender, RoutedEventArgs e)
         {
-            GardenWindow gardenWindow = new();
+            GardenWindow gardenWindow = new(gardenManager);
 
             gardenWindow.ShowDialog();
         }

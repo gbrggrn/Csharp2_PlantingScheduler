@@ -1,5 +1,6 @@
 ﻿using Csharp2_PlantingScheduler.Control.Interfaces;
 using Csharp2_PlantingScheduler.Model;
+using Csharp2_PlantingScheduler.Model.Plants.TypesOfPlants.Vegetable;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,11 +12,11 @@ using System.Threading.Tasks;
 namespace Csharp2_PlantingScheduler.Control.Managers
 {
     [Serializable]
-    class PlantManager : IObservableCollectionManager<Plant>
+    public class PlantManager : IObservableCollectionManager<Plant>
     {
         public PlantManager()
         {
-            Collection = new ObservableCollection<Plant>();
+            Collection = [];
         }
 
         //Properties
@@ -23,9 +24,9 @@ namespace Csharp2_PlantingScheduler.Control.Managers
         public ObservableCollection<Plant> Collection { get; }
 
         //Methods
-        public bool Add(Plant plantIn)
+        public void Add(Plant plantIn)
         {
-            throw new NotImplementedException();
+            Collection.Add(plantIn);
         }
 
         public bool Replace(ObservableCollection<Plant> plantCollectionIn)
@@ -56,6 +57,65 @@ namespace Csharp2_PlantingScheduler.Control.Managers
         public Plant GetAt(int indexIn)
         {
             throw new NotImplementedException();
+        }
+
+        public void AddTestValues()
+        {
+            Vegetable veg1 = new()
+            {
+                Category = Enums.PlantCategory.Vegetable,
+                GrowthType = Enums.GrowthType.Annual,
+                Name = "Svartkål",
+                SpeciesName = "Nero",
+                Type = Enums.VegetableType.Kale,
+                SowType = Enums.SowType.Coldstart
+            };
+
+            Vegetable veg2 = new()
+            {
+                Category = Enums.PlantCategory.Vegetable,
+                GrowthType = Enums.GrowthType.Annual,
+                Name = "Rödbeta",
+                SpeciesName = "Detroit 2",
+                Type = Enums.VegetableType.Beet,
+                SowType = Enums.SowType.Directsow
+            };
+
+            Vegetable veg3 = new()
+            {
+                Category = Enums.PlantCategory.Vegetable,
+                GrowthType = Enums.GrowthType.Annual,
+                Name = "Sallad",
+                SpeciesName = "Lollo Rossa",
+                Type = Enums.VegetableType.Salad,
+                SowType = Enums.SowType.Coldstart
+            };
+
+            Vegetable veg4 = new()
+            {
+                Category = Enums.PlantCategory.Vegetable,
+                GrowthType = Enums.GrowthType.Annual,
+                Name = "Böna",
+                SpeciesName = "Långböna",
+                Type = Enums.VegetableType.Bean,
+                SowType = Enums.SowType.Coldstart
+            };
+
+            Vegetable veg5 = new()
+            {
+                Category = Enums.PlantCategory.Vegetable,
+                GrowthType = Enums.GrowthType.Annual,
+                Name = "Tomat",
+                SpeciesName = "Brandywine Yellow",
+                Type = Enums.VegetableType.Tomato,
+                SowType = Enums.SowType.Indoorstart
+            };
+
+            Add(veg1);
+            Add(veg2);
+            Add(veg3);
+            Add(veg4);
+            Add(veg5);
         }
     }
 }

@@ -61,12 +61,12 @@
             <!-- Garden Listview -->
             <ListView Grid.Column="1" Margin="10"
                       x:Name="gardenLstView"
-                      ItemsSource="{Binding GardensPlantsObserver}"
+                      ItemsSource="{Binding GardenManager.Collection}"
                       SelectionMode="Multiple">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="Gardens" Width="125" DisplayMemberBinding="{Binding Gardens.GardenName}"/>
-                        <GridViewColumn Header="Zone" Width="100" DisplayMemberBinding="{Binding Gardens.Zone}"/>
+                        <GridViewColumn Header="Gardens" Width="125" DisplayMemberBinding="{Binding GardenName}"/>
+                        <GridViewColumn Header="Zone" Width="100" DisplayMemberBinding="{Binding Zone}"/>
                     </GridView>
                 </ListView.View>
             </ListView>
@@ -74,12 +74,12 @@
             <!-- Plants ListView -->
             <ListView Grid.Column="2" Margin="10"
                     x:Name="plantsLstView"
-                    ItemsSource="{Binding GardensPlantsObserver}"
+                    ItemsSource="{Binding PlantManager.Collection}"
                     SelectionMode="Multiple">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="Plants" Width="125" DisplayMemberBinding="{Binding Plants.Name}"/>
-                        <GridViewColumn Header="Type" Width="100" DisplayMemberBinding="{Binding Plants.Category}"/>
+                        <GridViewColumn Header="Plants" Width="125" DisplayMemberBinding="{Binding Name}"/>
+                        <GridViewColumn Header="Type" Width="100" DisplayMemberBinding="{Binding Category}"/>
                     </GridView>
                 </ListView.View>
             </ListView>

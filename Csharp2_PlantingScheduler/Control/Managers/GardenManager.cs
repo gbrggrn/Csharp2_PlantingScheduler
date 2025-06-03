@@ -12,11 +12,11 @@ using System.Threading.Tasks;
 namespace Csharp2_PlantingScheduler.Control.Managers
 {
     [Serializable]
-    class GardenManager : IObservableCollectionManager<Garden>
+    public class GardenManager : IObservableCollectionManager<Garden>
     {
         public GardenManager()
         {
-            Collection = new ObservableCollection<Garden>();
+            Collection = [];
         }
 
         //Properties
@@ -24,9 +24,9 @@ namespace Csharp2_PlantingScheduler.Control.Managers
         public ObservableCollection<Garden> Collection { get; }
 
         //Methods
-        public bool Add(Garden gardenIn)
+        public void Add(Garden gardenIn)
         {
-            throw new NotImplementedException();
+            Collection.Add(gardenIn);
         }
 
         public bool Replace(ObservableCollection<Garden> gardenCollectionIn)
@@ -57,6 +57,18 @@ namespace Csharp2_PlantingScheduler.Control.Managers
         public Garden GetAt(int indexIn)
         {
             throw new NotImplementedException();
+        }
+
+        public void AddTestValues()
+        {
+            Garden testGarden = new()
+            {
+                GardenName = "Veda",
+                FirstFrostFreeWeek = 20,
+                LastFrostFreeWeek = 41
+            };
+
+            Add(testGarden);
         }
     }
 }

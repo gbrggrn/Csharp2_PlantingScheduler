@@ -10,7 +10,7 @@ namespace Csharp2_PlantingScheduler.Control.Interfaces
     internal interface IObservableCollectionManager<T>
     {
         //Methods
-        bool Add(T type);
+        void Add(T type);
         bool Replace(ObservableCollection<T> collectionIn);
         bool ChangeAt(T type, int indexIn);
         bool CheckIndex(int indexIn);

@@ -1,4 +1,5 @@
-﻿using Csharp2_PlantingScheduler.Helpers;
+﻿using Csharp2_PlantingScheduler.Control.Managers;
+using Csharp2_PlantingScheduler.Helpers;
 using Csharp2_PlantingScheduler.Model;
 using System;
 using System.Collections.Generic;
@@ -21,10 +22,13 @@ namespace Csharp2_PlantingScheduler
     /// </summary>
     public partial class GardenWindow : Window
     {
-        public GardenWindow()
+        private GardenManager gardenManager;
+
+        public GardenWindow(GardenManager currentGardenManager)
         {
             InitializeComponent();
             InitComboBoxes();
+            gardenManager = currentGardenManager;
         }
 
         private void ExitBtn_Click(object sender, RoutedEventArgs e)
@@ -37,7 +41,7 @@ namespace Csharp2_PlantingScheduler
 
         private void InitComboBoxes()
         {
-            for (int i = 1; i < 52; i++)
+            for (int i = 1; i < 53; i++)
             {
                 firstFrostFreeComboBox.Items.Add(i);
                 lastFrostFreeComboBox.Items.Add(i);
@@ -46,8 +50,36 @@ namespace Csharp2_PlantingScheduler
             firstFrostFreeComboBox.SelectedIndex = 0;
             lastFrostFreeComboBox.SelectedIndex = 0;
 
-            zoneComboBox.ItemsSource = Enum.GetName(typeof(Enums.GrowZone), Name);
+            zoneComboBox.ItemsSource = Enum.GetNames(typeof(Enums.GrowZone));
             zoneComboBox.SelectedIndex = 0;
+        }
+
+        private void saveBtn_Click(object sender, RoutedEventArgs e)
+        {
+            string name = nameTxtBox.Text;
+            Enums.GrowZone zone = (Enums.GrowZone)Enum.Parse(typeof(Enums.GrowZone), zoneComboBox.SelectedItem.ToString()!);
+            int frostFreeWeek = (int)firstFrostFreeComboBox.SelectedItem;
+            int lastFrostWeek = (int)lastFrostFreeComboBox.SelectedItem;
+
+            if (!string.IsNullOrEmpty(name))
+            {
+                Garden garden = new()
+                {
+                    GardenName = name,
+                    Zone = zone,
+                    FirstFrostFreeWeek = frostFreeWeek,
+                    LastFrostFreeWeek = lastFrostWeek
+                };
+
+                gardenManager.Add(garden);
+
+                MessageBoxes.DisplayInfoBox($"Garden {garden.GardenName} added!", "Success");
+                this.Close();
+            }
+            else
+            {
+                MessageBoxes.DisplayErrorBox("The garden needs a name");
+            }
         }
     }
 }
