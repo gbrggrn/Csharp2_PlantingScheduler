@@ -202,5 +202,28 @@ namespace Csharp2_PlantingScheduler
 
             plantWindow.ShowDialog();
         }
+
+        private void EditBtn_Click(object sender, RoutedEventArgs e)
+        {
+            bool plantSelected = plantsLstView.SelectedItems.Count == 1;
+            bool gardenSelected = gardenLstView.SelectedItems.Count == 1;
+
+            if (plantSelected && !gardenSelected)
+            {
+                int index = plantsLstView.SelectedIndex;
+
+                PlantWindow editingPlantWindow = new(plantManager, index);
+
+                editingPlantWindow.ShowDialog();
+            }
+            else if (!plantSelected && gardenSelected)
+            {
+                int index = gardenLstView.SelectedIndex;
+            }
+            else
+            {
+                MessageBoxes.DisplayErrorBox("You need to pick one garden or plant to edit");
+            }
+        }
     }
 }

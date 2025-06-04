@@ -56,7 +56,7 @@ namespace Csharp2_PlantingScheduler.Control.Managers
 
         public Plant GetAt(int indexIn)
         {
-            throw new NotImplementedException();
+            return Collection[indexIn];
         }
 
         public void AddTestValues()

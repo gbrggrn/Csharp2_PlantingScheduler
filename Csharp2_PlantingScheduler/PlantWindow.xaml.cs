@@ -1,6 +1,7 @@
 ﻿using Csharp2_PlantingScheduler.Control.Managers;
 using Csharp2_PlantingScheduler.Helpers;
 using Csharp2_PlantingScheduler.Model;
+using Csharp2_PlantingScheduler.Model.Plants.TypesOfPlants.Flower;
 using Csharp2_PlantingScheduler.Model.Plants.TypesOfPlants.Vegetable;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,8 @@ namespace Csharp2_PlantingScheduler
     {
         private PlantManager plantManager;
         private int nameMaxChar = 30;
+        private bool editingFlag = false;
+        private int editingIndex;
 
         public PlantWindow(PlantManager currentPlantManager)
         {
@@ -32,6 +35,35 @@ namespace Csharp2_PlantingScheduler
             plantManager = currentPlantManager;
             categoryComboBox.SelectionChanged += SwitchTypesComboBox;
             InitComboBoxes();
+        }
+
+        public PlantWindow(PlantManager currentPlantManager, int index)
+        {
+            InitializeComponent();
+            plantManager = currentPlantManager;
+            editingIndex = index;
+            categoryComboBox.SelectionChanged += SwitchTypesComboBox;
+            InitComboBoxes();
+            LoadPlantWhenEditing(editingIndex);
+            windowName.Content = "Editing Plant";
+        }
+
+        private void LoadPlantWhenEditing(int index)
+        {
+            editingFlag = true;
+            Plant plant = plantManager.GetAt(index);
+
+            if (plant is Vegetable veg)
+            {
+                categoryComboBox.SelectedItem = veg.Category;
+                growthTypeComboBox.SelectedItem = veg.GrowthType;
+                sowTypeComboBox.SelectedItem = veg.SowType;
+                nameTxtBox.Text = veg.SpeciesName;
+            }
+            else if (plant is Flower flower)
+            {
+                //TO DO
+            }
         }
 
         private void InitComboBoxes()
@@ -67,7 +99,7 @@ namespace Csharp2_PlantingScheduler
             }
         }
 
-        private void saveBtn_Click(object sender, RoutedEventArgs e)
+        private void SaveBtn_Click(object sender, RoutedEventArgs e)
         {
             string name = nameTxtBox.Text;
 
@@ -84,7 +116,14 @@ namespace Csharp2_PlantingScheduler
                         Type = (Enums.VegetableType)Enum.Parse(typeof(Enums.VegetableType), typeComboBox.SelectedItem.ToString()!)
                     };
 
-                    plantManager.Add(vegetable);
+                    if (editingFlag)
+                    {
+                        plantManager.ChangeAt(vegetable, editingIndex);
+                    }
+                    else
+                    {
+                        plantManager.Add(vegetable);
+                    }
 
                     MessageBoxes.DisplayInfoBox($"The {vegetable.Type.ToString()} {vegetable.SpeciesName} added!", "Success!");
                 }
