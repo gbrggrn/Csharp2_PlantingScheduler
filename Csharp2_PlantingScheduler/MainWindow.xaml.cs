@@ -219,11 +219,35 @@ namespace Csharp2_PlantingScheduler
             else if (!plantSelected && gardenSelected)
             {
                 int index = gardenLstView.SelectedIndex;
+
+                GardenWindow editGardenWindow = new(gardenManager, index);
+
+                editGardenWindow.ShowDialog();
             }
             else
             {
                 MessageBoxes.DisplayErrorBox("You need to pick one garden or plant to edit");
             }
+        }
+
+        private void ExitBtn_Click(Object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void NewBtn_Click(Object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void OpenJson_Click(Object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void SaveJson_Click(Object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

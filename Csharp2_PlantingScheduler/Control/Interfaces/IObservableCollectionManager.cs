@@ -12,7 +12,7 @@ namespace Csharp2_PlantingScheduler.Control.Interfaces
         //Methods
         void Add(T type);
         bool Replace(ObservableCollection<T> collectionIn);
-        bool ChangeAt(T type, int indexIn);
+        void ChangeAt(T type, int indexIn);
         bool CheckIndex(int indexIn);
         void DeleteAll();
         bool DeleteAt(T typeIn);

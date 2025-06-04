@@ -16,22 +16,16 @@
         <!-- Menu Bar -->
         <Menu Grid.Row="0" x:Name="mnuFile" Height="20" Width="75" HorizontalAlignment="Left" VerticalAlignment="Center">
             <MenuItem Header="_File" Margin="20,0,0,0" FontSize="14" FontFamily="Calibri">
-                <MenuItem Header="_New"/>
+                <MenuItem Header="_New" Click="NewBtn_Click"/>
                 <MenuItem Header="_Open">
-                    <MenuItem Header="_Text File"/>
-                    <MenuItem Header="_Json"/>
+                    <MenuItem Header="_Json" Click="OpenJson_Click"/>
                 </MenuItem>
                 <MenuItem Header="_Save"/>
                 <MenuItem Header="_Save as">
-                    <MenuItem Header="_Text File"/>
-                    <MenuItem Header="_Json"/>
+                    <MenuItem Header="_Json" Click="SaveJson_Click"/>
                 </MenuItem>
                 <Separator/>
-                <MenuItem Header="_XML">
-                    <MenuItem Header="_Save food items"/>
-                    <MenuItem Header="_Open food items"/>
-                </MenuItem>
-                <MenuItem Header="_Exit"/>
+                <MenuItem Header="_Exit" Click="ExitBtn_Click"/>
             </MenuItem>
         </Menu>
 
@@ -61,7 +55,8 @@
             <!-- Garden Listview -->
             <ListView Grid.Column="1" Margin="10"
                       x:Name="gardenLstView"
-                      ItemsSource="{Binding GardenManager.Collection}">
+                      ItemsSource="{Binding GardenManager.Collection}"
+                      SelectionMode="Multiple">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Garden" Width="150" DisplayMemberBinding="{Binding GardenName}"/>

@@ -34,9 +34,9 @@ namespace Csharp2_PlantingScheduler.Control.Managers
             throw new NotImplementedException();
         }
 
-        public bool ChangeAt(Plant plantIn, int index)
+        public void ChangeAt(Plant plantIn, int index)
         {
-            throw new NotImplementedException();
+            Collection[index] = plantIn;
         }
 
         public bool CheckIndex(int indexIn)

@@ -23,12 +23,35 @@ namespace Csharp2_PlantingScheduler
     public partial class GardenWindow : Window
     {
         private GardenManager gardenManager;
+        private int editingIndex;
+        private bool editingFlag = false;
 
         public GardenWindow(GardenManager currentGardenManager)
         {
             InitializeComponent();
             InitComboBoxes();
             gardenManager = currentGardenManager;
+        }
+
+        public GardenWindow(GardenManager currentGardenManager, int index)
+        {
+            InitializeComponent();
+            InitComboBoxes();
+            gardenManager = currentGardenManager;
+            editingIndex = index;
+            editingFlag = true;
+            LoadGardenWhenEditing(editingIndex);
+            windowName.Content = "Editing garden";
+        }
+
+        private void LoadGardenWhenEditing(int index)
+        {
+            Garden garden = gardenManager.GetAt(index);
+
+            firstFrostFreeComboBox.SelectedItem = garden.FirstFrostFreeWeek;
+            lastFrostFreeComboBox.SelectedItem = garden.LastFrostFreeWeek;
+            nameTxtBox.Text = garden.GardenName;
+            zoneComboBox.SelectedItem = garden.Zone;
         }
 
         private void ExitBtn_Click(object sender, RoutedEventArgs e)
@@ -71,7 +94,14 @@ namespace Csharp2_PlantingScheduler
                     LastFrostFreeWeek = lastFrostWeek
                 };
 
-                gardenManager.Add(garden);
+                if (editingFlag)
+                {
+                    gardenManager.ChangeAt(garden, editingIndex);
+                }
+                else
+                {
+                    gardenManager.Add(garden);
+                }
 
                 MessageBoxes.DisplayInfoBox($"Garden {garden.GardenName} added!", "Success");
                 this.Close();
