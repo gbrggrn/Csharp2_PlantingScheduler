@@ -7,15 +7,17 @@ using System.Threading.Tasks;
 
 namespace Csharp2_PlantingScheduler.Control.Interfaces
 {
-    internal interface IObservableCollectionManager<T>
+    /// <summary>
+    /// Interface for observablecollections in managers
+    /// </summary>
+    /// <typeparam name="T">Type the collection holds</typeparam>
+    public interface IObservableCollectionManager<T>
     {
         //Methods
         void Add(T type);
-        bool Replace(ObservableCollection<T> collectionIn);
         void ChangeAt(T type, int indexIn);
-        bool CheckIndex(int indexIn);
         void DeleteAll();
-        bool DeleteAt(T typeIn);
+        void DeleteAt(int index);
         T GetAt(int indexIn);
 
         //Properties

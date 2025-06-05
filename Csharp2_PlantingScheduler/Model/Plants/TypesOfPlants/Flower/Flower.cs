@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 
 namespace Csharp2_PlantingScheduler.Model.Plants.TypesOfPlants.Flower
 {
-    class Flower : Plant
+    public class Flower : Plant
     {
         public string SpeciesName { get; set; } = string.Empty;
         public Enums.FlowerType FlowerType { get; set; }
         public Enums.SowType SowType { get; set; }
+
+        public Flower() { }
     }
 }

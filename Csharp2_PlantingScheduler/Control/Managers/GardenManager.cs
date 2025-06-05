@@ -6,12 +6,10 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Csharp2_PlantingScheduler.Control.Managers
 {
-    [Serializable]
     public class GardenManager : IObservableCollectionManager<Garden>
     {
         public GardenManager()
@@ -20,7 +18,7 @@ namespace Csharp2_PlantingScheduler.Control.Managers
         }
 
         //Properties
-        public int Count { get; }
+        public int Count => Collection.Count;
         public ObservableCollection<Garden> Collection { get; }
 
         //Methods
@@ -29,29 +27,19 @@ namespace Csharp2_PlantingScheduler.Control.Managers
             Collection.Add(gardenIn);
         }
 
-        public bool Replace(ObservableCollection<Garden> gardenCollectionIn)
-        {
-            throw new NotImplementedException();
-        }
-
         public void ChangeAt(Garden gardenIn, int index)
         {
             Collection[index] = gardenIn;
         }
 
-        public bool CheckIndex(int indexIn)
-        {
-            throw new NotImplementedException();
-        }
-
         public void DeleteAll()
         {
-            throw new NotImplementedException();
+            Collection.Clear();
         }
 
-        public bool DeleteAt(Garden gardenIn)
+        public void DeleteAt(int index)
         {
-            throw new NotImplementedException();
+            Collection.RemoveAt(index);
         }
 
         public Garden GetAt(int indexIn)
@@ -59,16 +47,14 @@ namespace Csharp2_PlantingScheduler.Control.Managers
             return Collection[indexIn];
         }
 
-        public void AddTestValues()
+        /*public void AddTestValues()
         {
             Garden testGarden = new()
             {
-                GardenName = "Veda",
-                FirstFrostFreeWeek = 20,
-                LastFrostFreeWeek = 41
+                GardenName = "Veda"
             };
 
             Add(testGarden);
-        }
+        }*/
     }
 }

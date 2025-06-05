@@ -20,7 +20,7 @@
                 <MenuItem Header="_Open">
                     <MenuItem Header="_Json" Click="OpenJson_Click"/>
                 </MenuItem>
-                <MenuItem Header="_Save"/>
+                <MenuItem Header="_Save" Click="Save_Click"/>
                 <MenuItem Header="_Save as">
                     <MenuItem Header="_Json" Click="SaveJson_Click"/>
                 </MenuItem>
@@ -48,7 +48,7 @@
                 <Button Grid.Row="0" x:Name="addGardenBtn" Content="Add Garden" Margin="10" Click="AddGardenBtn_Click"/>
                 <Button Grid.Row="1" x:Name="addPlantBtn" Content="Add Plant" Margin="10" Click="AddPlantBtn_Click"/>
                 <Button Grid.Row="2" x:Name="editBtn" Content="Edit" Margin="10" Click="EditBtn_Click"/>
-                <Button Grid.Row="3" x:Name="deleteBtn" Content="Delete" Margin="10"/>
+                <Button Grid.Row="3" x:Name="deleteBtn" Content="Delete" Margin="10" Click="DeleteBtn_Click"/>
                 <Button Grid.Row="4" x:Name="generateBtn" Content="Generate Schedule" Margin="10" Click="GenerateBtn_Click"/>
             </Grid>
 
@@ -81,7 +81,7 @@
         
         <!-- Schedule Display -->
         <ScrollViewer Grid.Row="2" Margin="10" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-            <Grid x:Name="ScheduleGrid"/>
+            <Grid x:Name="scheduleGrid"/>
             <!-- Content added programmatically -->
         </ScrollViewer>
 

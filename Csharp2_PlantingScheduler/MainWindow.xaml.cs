@@ -3,17 +3,11 @@ using Csharp2_PlantingScheduler.Control.ScheduleCreators;
 using Csharp2_PlantingScheduler.Helpers;
 using Csharp2_PlantingScheduler.Model;
 using Csharp2_PlantingScheduler.Model.ScheduleModel;
+using Microsoft.Win32;
 using System.Globalization;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Csharp2_PlantingScheduler
 {
@@ -34,6 +28,7 @@ namespace Csharp2_PlantingScheduler
         //Properties
         public GardenManager GardenManager => gardenManager;
         public PlantManager PlantManager => plantManager;
+        private string FilePath { get; set; }
 
         public MainWindow()
         {
@@ -41,27 +36,25 @@ namespace Csharp2_PlantingScheduler
             BuildScheduleSkeleton();
             gardenManager = new();
             plantManager = new();
-            gardenManager.AddTestValues();
-            plantManager.AddTestValues();
-
+            FilePath = string.Empty;
             DataContext = this;
         }
 
         private void BuildScheduleSkeleton()
         {
-            ScheduleGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(30) });
-            ScheduleGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(25) });
+            scheduleGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(30) });
+            scheduleGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(25) });
 
             //Type/name/weeks to harvest columns
             for (int i = 0; i < 3; i++)
             {
-                ScheduleGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+                scheduleGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
             }
 
             //Week columns
             for (int i = 0; i < weeksPerYear; i++)
             {
-                ScheduleGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(25) });
+                scheduleGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(25) });
             }
 
             //Month headers
@@ -81,7 +74,7 @@ namespace Csharp2_PlantingScheduler
 
                 Grid.SetColumnSpan(monthHeader, 4);
 
-                ScheduleGrid.Children.Add(monthHeader);
+                scheduleGrid.Children.Add(monthHeader);
             }
 
             for (int i = 0; i < weeksPerYear; i++)
@@ -95,7 +88,7 @@ namespace Csharp2_PlantingScheduler
 
                 Grid.SetRow(weekHeader, 1);
                 Grid.SetColumn(weekHeader, 3 + i);
-                ScheduleGrid.Children.Add(weekHeader);
+                scheduleGrid.Children.Add(weekHeader);
             }
         }
 
@@ -125,31 +118,37 @@ namespace Csharp2_PlantingScheduler
 
         private void GenerateScheduleRows(List<ScheduleRow> scheduleRows)
         {
-            ScheduleGrid.RowDefinitions.Clear();
-            ScheduleGrid.ColumnDefinitions.Clear();
+            scheduleGrid.RowDefinitions.Clear();
+            scheduleGrid.ColumnDefinitions.Clear();
 
             BuildScheduleSkeleton();
 
             foreach (ScheduleRow row in scheduleRows)
             {
-                ScheduleGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(25) });
+                scheduleGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(25) });
 
-                int currentRow = ScheduleGrid.RowDefinitions.Count - 1;
+                int currentRow = scheduleGrid.RowDefinitions.Count - 1;
 
-                ScheduleGrid.Children.Add(CreateHeaderTextBlock(row.NameDisplay, currentRow, 0));
-                ScheduleGrid.Children.Add(CreateHeaderTextBlock(row.TypeDisplay, currentRow, 1));
-                ScheduleGrid.Children.Add(CreateHeaderTextBlock(row.WeeksToHarvestDisplay.ToString(), currentRow, 2));
+                scheduleGrid.Children.Add(CreateHeaderTextBlock(row.NameDisplay, currentRow, 0));
+                scheduleGrid.Children.Add(CreateHeaderTextBlock(row.TypeDisplay, currentRow, 1));
+                scheduleGrid.Children.Add(CreateHeaderTextBlock(row.WeeksToHarvestDisplay.ToString(), currentRow, 2));
 
                 for (int week = 0; week < weeksPerYear; week++)
                 {
                     Brush cellColor = Brushes.Transparent;
 
                     int indoorEndWeek = row.StartWeek + row.IndoorWeeks;
+                    int coldStartEndWeek = row.StartWeek + row.ColdStartWeeks;
 
-                    //If in the indoor-period
+                    //If indoor period
                     if (row.IndoorWeeks > 0 && week >= row.StartWeek && week < indoorEndWeek)
                     {
                         cellColor = Brushes.LightBlue;
+                    }
+                    //If cold start period
+                    else if (row.ColdStartWeeks > 0 && week >= row.StartWeek && week < coldStartEndWeek)
+                    {
+                        cellColor = Brushes.LightSkyBlue;
                     }
                     //If transplanted outdoor
                     else if (week >= row.StartWeek && week <= row.EndWeek)
@@ -168,7 +167,7 @@ namespace Csharp2_PlantingScheduler
 
                     //Account for the three first cells
                     Grid.SetColumn(weekCell, 3 + week);
-                    ScheduleGrid.Children.Add(weekCell);
+                    scheduleGrid.Children.Add(weekCell);
                 }
             }
         }
@@ -232,22 +231,104 @@ namespace Csharp2_PlantingScheduler
 
         private void ExitBtn_Click(Object sender, RoutedEventArgs e)
         {
-
+            if (MessageBoxes.DisplayQuestion("Are you sure? Unsaved changes will be lost", "Exit?"))
+            {
+                this.Close();
+            }
         }
 
         private void NewBtn_Click(Object sender, RoutedEventArgs e)
         {
+            if (MessageBoxes.DisplayQuestion("Are you sure? Unsaved changes will be lost", "New?"))
+            {
+                plantManager.DeleteAll();
+                gardenManager.DeleteAll();
 
+                FilePath = string.Empty;
+            }
         }
 
         private void OpenJson_Click(Object sender, RoutedEventArgs e)
         {
+            OpenFileDialog open = new OpenFileDialog();
 
+            if (open.ShowDialog() == true)
+            {
+                FilePath = open.FileName;
+
+                try
+                {
+                    FileManager file = new(plantManager, gardenManager);
+                    file.Deserialize(FilePath);
+                }
+                catch (Exception ex)
+                {
+                    MessageBoxes.DisplayErrorBox($"Something went wrong \n {ex.Message}");
+                }
+            }
         }
 
         private void SaveJson_Click(Object sender, RoutedEventArgs e)
         {
+            SaveFileDialog save = new SaveFileDialog();
 
+            if (save.ShowDialog() == true)
+            {
+                FilePath = save.FileName;
+
+                try
+                {
+                    FileManager file = new(plantManager, gardenManager);
+                    file.Serialize(FilePath);
+                }
+                catch (Exception ex)
+                {
+                    MessageBoxes.DisplayErrorBox($"Something went wrong \n {ex.Message}");
+                }
+            }
+        }
+
+        private void DeleteBtn_Click(object sender, RoutedEventArgs e)
+        {
+            bool plantSelected = plantsLstView.SelectedItems.Count == 1;
+            bool gardenSelected = gardenLstView.SelectedItems.Count == 1;
+
+            if (plantSelected && !gardenSelected)
+            {
+                if (MessageBoxes.DisplayQuestion("Are you sure?", "Delete?"))
+                {
+                    int plantIndex = plantsLstView.SelectedIndex;
+                    plantManager.DeleteAt(plantIndex);
+                }
+            }
+            else if (!plantSelected && gardenSelected)
+            {
+                if (MessageBoxes.DisplayQuestion("Are you sure?", "Delete?"))
+                {
+                    int gardenIndex = gardenLstView.SelectedIndex;
+                    gardenManager.DeleteAt(gardenIndex);
+                }
+            }
+        }
+
+        private void Save_Click(object sender, RoutedEventArgs e)
+        {
+            if (!string.IsNullOrEmpty(FilePath))
+            {
+                try
+                {
+                    FileManager file = new(plantManager, gardenManager);
+                    file.Serialize(FilePath);
+                }
+                catch (Exception ex)
+                {
+                    MessageBoxes.DisplayErrorBox($"Something went wrong \n {ex.Message}");
+                }
+            }
+            else
+            {
+                SaveJson_Click(sender, e);
+            }
         }
     }
 }

@@ -58,32 +58,16 @@ namespace Csharp2_PlantingScheduler.Model
 
         public enum GrowZone
         {
-            Zone1 = -4,
-            Zone2 = -2,
-            Zone3 = -1,
-            Zone4 =  0,
-            Zone5 = +1,
-            Zone6 = +2,
-            Zone7 = +3,
-            Zone8 = +4,
-            Zone9 = +5,
-            Mountain = +6
-        }
-
-        public enum Months
-        {
-            Jan,
-            Feb,
-            Mar,
-            Apr,
-            May,
-            Jun,
-            Jul,
-            Aug,
-            Oct,
-            Sep,
-            Nov,
-            Dec
+            Zone1 = 16,
+            Zone2 = 17,
+            Zone3 = 18,
+            Zone4 = 19,
+            Zone5 = 20,
+            Zone6 = 21,
+            Zone7 = 22,
+            Zone8 = 23,
+            Zone9 = 24,
+            Mountain = 25
         }
     }
 }

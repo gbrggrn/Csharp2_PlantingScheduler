@@ -48,8 +48,6 @@ namespace Csharp2_PlantingScheduler
         {
             Garden garden = gardenManager.GetAt(index);
 
-            firstFrostFreeComboBox.SelectedItem = garden.FirstFrostFreeWeek;
-            lastFrostFreeComboBox.SelectedItem = garden.LastFrostFreeWeek;
             nameTxtBox.Text = garden.GardenName;
             zoneComboBox.SelectedItem = garden.Zone;
         }
@@ -64,15 +62,6 @@ namespace Csharp2_PlantingScheduler
 
         private void InitComboBoxes()
         {
-            for (int i = 1; i < 53; i++)
-            {
-                firstFrostFreeComboBox.Items.Add(i);
-                lastFrostFreeComboBox.Items.Add(i);
-            }
-
-            firstFrostFreeComboBox.SelectedIndex = 0;
-            lastFrostFreeComboBox.SelectedIndex = 0;
-
             zoneComboBox.ItemsSource = Enum.GetNames(typeof(Enums.GrowZone));
             zoneComboBox.SelectedIndex = 0;
         }
@@ -81,8 +70,6 @@ namespace Csharp2_PlantingScheduler
         {
             string name = nameTxtBox.Text;
             Enums.GrowZone zone = (Enums.GrowZone)Enum.Parse(typeof(Enums.GrowZone), zoneComboBox.SelectedItem.ToString()!);
-            int frostFreeWeek = (int)firstFrostFreeComboBox.SelectedItem;
-            int lastFrostWeek = (int)lastFrostFreeComboBox.SelectedItem;
 
             if (!string.IsNullOrEmpty(name))
             {
@@ -90,8 +77,6 @@ namespace Csharp2_PlantingScheduler
                 {
                     GardenName = name,
                     Zone = zone,
-                    FirstFrostFreeWeek = frostFreeWeek,
-                    LastFrostFreeWeek = lastFrostWeek
                 };
 
                 if (editingFlag)

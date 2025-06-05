@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Csharp2_PlantingScheduler.Model.Plants.TypesOfPlants.Vegetable
 {
-    public static class VegetableDataMap
+    public class VegetableDataMap
     {
         public static readonly Dictionary<Enums.VegetableType, VegetableMetaData> MetaData = new()
         {

@@ -10,7 +10,5 @@ namespace Csharp2_PlantingScheduler.Model
     {
         public Enums.GrowZone Zone { get; set; }
         public string GardenName { get; set; } = string.Empty;
-        public int FirstFrostFreeWeek { get; set; }
-        public int LastFrostFreeWeek { get; set; }
     }
 }

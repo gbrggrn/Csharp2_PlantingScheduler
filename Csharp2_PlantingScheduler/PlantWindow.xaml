@@ -5,9 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Csharp2_PlantingScheduler"
         mc:Ignorable="d"
-        Title="PlantWindow" Height="390" Width="450">
+        Title="PlantWindow" Height="650" Width="450">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
             <RowDefinition Height="50"/>
             <RowDefinition Height="50"/>
             <RowDefinition Height="50"/>
@@ -44,8 +48,24 @@
         <!-- Row 5 -->
         <Label Grid.Row="5" Grid.Column="0" x:Name="sowTypeLbl" Content="Sow type:" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10"/>
         <ComboBox Grid.Row="5" Grid.Column="1" x:Name="sowTypeComboBox" Margin="10"/>
+        
+        <!-- Row 6-->
+        <Label Grid.Row="6" Grid.Column="0" x:Name="startWeekLbl" Content="Base start week:" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10"/>
+        <ComboBox Grid.Row="6" Grid.Column="1" x:Name="startWeekComboBox" Margin="10"/>
+        
+        <!-- Row 7 -->
+        <Label Grid.Row="7" Grid.Column="0" x:Name="weeksToHarvestLbl" Content="Weeks to harvest:" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10"/>
+        <ComboBox Grid.Row="7" Grid.Column="1" x:Name="weeksToHarvestComboBox" Margin="10"/>
 
-        <!-- Row 6 -->
-        <Button Grid.Row="6" Grid.Column="1" x:Name="saveBtn" Content="Save" Margin="10" Click="SaveBtn_Click"/>
+        <!-- Row 8 -->
+        <Label Grid.Row="8" Grid.Column="0" x:Name="indoorWeeksLbl" Content="Indoor weeks:" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10"/>
+        <ComboBox Grid.Row="8" Grid.Column="1" IsEnabled="False" x:Name="indoorWeeksComboBox" Margin="10"/>
+
+        <!-- Row 9 -->
+        <Label Grid.Row="9" Grid.Column="0" x:Name="coldStartWeeksLbl" Content="Cold start weeks:" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10"/>
+        <ComboBox Grid.Row="9" Grid.Column="1" IsEnabled="False" x:Name="coldStartComboBox" Margin="10"/>
+        
+        <!-- Row 10 -->
+        <Button Grid.Row="10" Grid.Column="1" x:Name="saveBtn" Content="Save" Margin="10" Click="SaveBtn_Click"/>
     </Grid>
 </Window>

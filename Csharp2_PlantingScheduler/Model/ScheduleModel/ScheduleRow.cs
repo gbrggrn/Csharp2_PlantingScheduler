@@ -14,5 +14,6 @@ namespace Csharp2_PlantingScheduler.Model.ScheduleModel
         public int StartWeek {  get; set; }
         public int EndWeek { get; set; }
         public int IndoorWeeks { get; set; } = 0;
+        public int ColdStartWeeks { get; set; } = 0;
     }
 }

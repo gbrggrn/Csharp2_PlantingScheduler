@@ -6,10 +6,17 @@ using System.Threading.Tasks;
 
 namespace Csharp2_PlantingScheduler.Model.Plants.TypesOfPlants.Vegetable
 {
-    class Vegetable : Plant
+    public class Vegetable : Plant
     {
         public string SpeciesName { get; set; } = string.Empty;
         public Enums.VegetableType Type { get; set; }
         public Enums.SowType SowType { get; set; }
+
+        public int BaseStartWeek { get; set; }
+        public int WeeksToHarvest { get; set; }
+        public int? IndoorWeeks { get; set; }
+        public int? ColdStartWeeks { get; set; }
+
+        public Vegetable() { }
     }
 }

@@ -21,41 +21,40 @@ namespace Csharp2_PlantingScheduler.Control.ScheduleCreators
             {
                 if (plant is Vegetable veg)
                 {
-                    if (VegetableDataMap.MetaData.TryGetValue(veg.Type, out VegetableMetaData? metaData))
+                    int indoorWeeks = veg.IndoorWeeks ?? 0;
+                    int coldStartWeeks = veg.ColdStartWeeks ?? 0;
+
+                    int firstFrostFreeWeek = (int)garden.Zone;
+
+                    int startWeek;
+                    if (indoorWeeks > 0)
                     {
-                        //Fallback value 0
-                        int indoorWeeks = metaData.IndoorWeeks ?? 0;
-
-                        //Extrapolate the rest
-                        int startWeek = metaData.BaseStartWeek - indoorWeeks;
-                        //Apply zone coefficient
-                        startWeek += (int)garden.Zone;
-                        int weeksToHarvest = metaData.WeeksToHarvest;
-                        int endWeek = startWeek + weeksToHarvest;
-
-                        //If transplanting is at risk of frost damage
-                        if (indoorWeeks != 0 && startWeek + indoorWeeks < garden.FirstFrostFreeWeek)
-                        {
-                            int frostOffset = garden.FirstFrostFreeWeek - (startWeek + indoorWeeks);
-
-                            startWeek += frostOffset;
-                            endWeek += frostOffset;
-                        }
-
-                        //Create a schedule row
-                        ScheduleRow scheduleRow = new()
-                        {
-                            TypeDisplay = veg.Type.ToString(),
-                            NameDisplay = veg.SpeciesName,
-                            WeeksToHarvestDisplay = weeksToHarvest,
-                            StartWeek = startWeek,
-                            EndWeek = endWeek,
-                            IndoorWeeks = indoorWeeks
-                        };
-
-                        //Add row to list of parsed rows
-                        parsedRows.Add(scheduleRow);
+                        startWeek = firstFrostFreeWeek - indoorWeeks;
                     }
+                    else if (coldStartWeeks > 0)
+                    {
+                        startWeek = firstFrostFreeWeek - coldStartWeeks;
+                    }
+                    else
+                    {
+                        startWeek = firstFrostFreeWeek;
+                    }
+
+                    int weeksToHarvest = veg.WeeksToHarvest;
+                    int endWeek = startWeek + weeksToHarvest;
+
+                    ScheduleRow scheduleRow = new()
+                    {
+                        TypeDisplay = veg.Type.ToString(),
+                        NameDisplay = veg.SpeciesName,
+                        WeeksToHarvestDisplay = weeksToHarvest,
+                        StartWeek = startWeek,
+                        EndWeek = endWeek,
+                        IndoorWeeks = indoorWeeks,
+                        ColdStartWeeks = coldStartWeeks
+                    };
+
+                    parsedRows.Add(scheduleRow);
                 }
                 else if (plant is Flower flower)
                 {

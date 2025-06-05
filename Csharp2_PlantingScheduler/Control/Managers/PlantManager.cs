@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 
 namespace Csharp2_PlantingScheduler.Control.Managers
 {
-    [Serializable]
     public class PlantManager : IObservableCollectionManager<Plant>
     {
         public PlantManager()
@@ -20,7 +19,7 @@ namespace Csharp2_PlantingScheduler.Control.Managers
         }
 
         //Properties
-        public int Count { get; }
+        public int Count => Collection.Count;
         public ObservableCollection<Plant> Collection { get; }
 
         //Methods
@@ -29,29 +28,19 @@ namespace Csharp2_PlantingScheduler.Control.Managers
             Collection.Add(plantIn);
         }
 
-        public bool Replace(ObservableCollection<Plant> plantCollectionIn)
-        {
-            throw new NotImplementedException();
-        }
-
         public void ChangeAt(Plant plantIn, int index)
         {
             Collection[index] = plantIn;
         }
 
-        public bool CheckIndex(int indexIn)
-        {
-            throw new NotImplementedException();
-        }
-
         public void DeleteAll()
         {
-            throw new NotImplementedException();
+            Collection.Clear();
         }
 
-        public bool DeleteAt(Plant plantIn)
+        public void DeleteAt(int index)
         {
-            throw new NotImplementedException();
+            Collection.RemoveAt(index);
         }
 
         public Plant GetAt(int indexIn)
@@ -59,7 +48,7 @@ namespace Csharp2_PlantingScheduler.Control.Managers
             return Collection[indexIn];
         }
 
-        public void AddTestValues()
+        /*public void AddTestValues()
         {
             Vegetable veg1 = new()
             {
@@ -111,6 +100,6 @@ namespace Csharp2_PlantingScheduler.Control.Managers
             Add(veg3);
             Add(veg4);
             Add(veg5);
-        }
+        }*/
     }
 }
