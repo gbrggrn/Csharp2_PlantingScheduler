@@ -11,17 +11,31 @@ using System.Threading.Tasks;
 
 namespace Csharp2_PlantingScheduler.Control.Managers
 {
+    /// <summary>
+    /// Handles all file operations
+    /// </summary>
     class FileManager
     {
-        private PlantManager plantManager;
-        private GardenManager gardenManager;
+        //Manager access
+        private readonly PlantManager plantManager;
+        private readonly GardenManager gardenManager;
 
+        /// <summary>
+        /// Constructor assigns access to current managers
+        /// </summary>
+        /// <param name="plantManager">The current instance of plantManager</param>
+        /// <param name="gardenManager">The current instance of gardenManager</param>
         public FileManager(PlantManager plantManager, GardenManager gardenManager)
         {
             this.plantManager = plantManager;
             this.gardenManager = gardenManager;
         }
 
+        /// <summary>
+        /// Serializes plants and gardens in a wrapper-class
+        /// </summary>
+        /// <param name="filePath">The file path to serialize to</param>
+        /// <exception cref="ArgumentException">Throws if serialization fails</exception>
         public void Serialize(string filePath)
         {
             GardenPlantsFileWrapper wrap = new();
@@ -42,12 +56,10 @@ namespace Csharp2_PlantingScheduler.Control.Managers
 
             try
             {
-                using (StreamWriter write = new(filePath))
-                {
-                    string jsonString = JsonSerializer.Serialize(wrap);
+                using StreamWriter write = new(filePath);
+                string jsonString = JsonSerializer.Serialize(wrap);
 
-                    write.Write(jsonString);
-                }
+                write.Write(jsonString);
             }
             catch (Exception ex)
             {
@@ -57,17 +69,20 @@ namespace Csharp2_PlantingScheduler.Control.Managers
             }
         }
 
+        /// <summary>
+        /// Deserializes wrapper and calls unwrapping
+        /// </summary>
+        /// <param name="filePath">The file path of the file to deserialize</param>
+        /// <exception cref="ArgumentException">Throws if deserialization fails</exception>
         public void Deserialize(string filePath)
         {
             GardenPlantsFileWrapper wrapped = new();
 
             try
             {
-                using (StreamReader read = new(filePath))
-                {
-                    string jsonString = read.ReadToEnd();
-                    wrapped = JsonSerializer.Deserialize<GardenPlantsFileWrapper>(jsonString)!;
-                }
+                using StreamReader read = new(filePath);
+                string jsonString = read.ReadToEnd();
+                wrapped = JsonSerializer.Deserialize<GardenPlantsFileWrapper>(jsonString)!;
             }
             catch (Exception ex)
             {
@@ -79,7 +94,11 @@ namespace Csharp2_PlantingScheduler.Control.Managers
             UnwrapData(wrapped);
         }
 
-        private bool UnwrapData(GardenPlantsFileWrapper wrapped)
+        /// <summary>
+        /// Unwraps the wrapped data and adds it back to the collections
+        /// </summary>
+        /// <param name="wrapped">The wrapper to unwrap</param>
+        private void UnwrapData(GardenPlantsFileWrapper wrapped)
         {
             if (wrapped != null)
             {
@@ -97,11 +116,7 @@ namespace Csharp2_PlantingScheduler.Control.Managers
                 {
                     gardenManager.Add(garden);
                 }
-
-                return true;
             }
-
-            return false;
         }
     }
 }

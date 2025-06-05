@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Csharp2_PlantingScheduler.Model.ScheduleModel
 {
+    /// <summary>
+    /// Defines a schedule row
+    /// </summary>
     public class ScheduleRow
     {
         public string TypeDisplay { get; set; } = string.Empty;

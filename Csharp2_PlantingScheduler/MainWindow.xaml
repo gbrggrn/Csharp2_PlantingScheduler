@@ -72,8 +72,8 @@
                     SelectionMode="Multiple">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="Species" Width="150" DisplayMemberBinding="{Binding SpeciesName}"/>
-                        <GridViewColumn Header="Type" Width="150" DisplayMemberBinding="{Binding Category}"/>
+                        <GridViewColumn Header="Species" Width="Auto" DisplayMemberBinding="{Binding SpeciesName}"/>
+                        <GridViewColumn Header="Category" Width="Auto" DisplayMemberBinding="{Binding Category}"/>
                     </GridView>
                 </ListView.View>
             </ListView>

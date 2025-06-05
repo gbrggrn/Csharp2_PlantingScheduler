@@ -10,8 +10,14 @@ using System.Threading.Tasks;
 
 namespace Csharp2_PlantingScheduler.Control.Managers
 {
+    /// <summary>
+    /// Manages gardens
+    /// </summary>
     public class GardenManager : IObservableCollectionManager<Garden>
     {
+        /// <summary>
+        /// Constructor initializes collection
+        /// </summary>
         public GardenManager()
         {
             Collection = [];
@@ -21,7 +27,6 @@ namespace Csharp2_PlantingScheduler.Control.Managers
         public int Count => Collection.Count;
         public ObservableCollection<Garden> Collection { get; }
 
-        //Methods
         public void Add(Garden gardenIn)
         {
             Collection.Add(gardenIn);
@@ -47,6 +52,7 @@ namespace Csharp2_PlantingScheduler.Control.Managers
             return Collection[indexIn];
         }
 
+        //Testvalues before filehandling
         /*public void AddTestValues()
         {
             Garden testGarden = new()

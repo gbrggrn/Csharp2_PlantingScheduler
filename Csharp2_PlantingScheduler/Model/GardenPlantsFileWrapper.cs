@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace Csharp2_PlantingScheduler.Model
 {
+    /// <summary>
+    /// Wrapper as a workaround for polymorphism which json is not a fan of
+    /// </summary>
     [Serializable]
     public class GardenPlantsFileWrapper
     {

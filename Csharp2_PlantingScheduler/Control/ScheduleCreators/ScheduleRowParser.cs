@@ -11,8 +11,18 @@ using System.Threading.Tasks;
 
 namespace Csharp2_PlantingScheduler.Control.ScheduleCreators
 {
+    /// <summary>
+    /// Responsible for creating schedule rows
+    /// </summary>
     public static class ScheduleRowParser
     {
+        /// <summary>
+        /// Creates schedule rows combining garden and plant values
+        /// Flowers not yet implemented
+        /// </summary>
+        /// <param name="garden">The chosen garden</param>
+        /// <param name="plants">The chosen plants</param>
+        /// <returns>The parsed rows as a list</returns>
         public static List<ScheduleRow> ParseToRows(Garden garden, List<Plant> plants)
         {
             List<ScheduleRow> parsedRows = [];

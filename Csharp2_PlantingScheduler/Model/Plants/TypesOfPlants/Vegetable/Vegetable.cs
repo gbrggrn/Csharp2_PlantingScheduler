@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Csharp2_PlantingScheduler.Model.Plants.TypesOfPlants.Vegetable
 {
+    /// <summary>
+    /// Defines a vegetable
+    /// </summary>
     public class Vegetable : Plant
     {
         public string SpeciesName { get; set; } = string.Empty;

@@ -24,10 +24,10 @@ namespace Csharp2_PlantingScheduler
     /// </summary>
     public partial class PlantWindow : Window
     {
-        private PlantManager plantManager;
-        private int nameMaxChar = 30;
+        private readonly PlantManager plantManager;
+        private const int nameMaxChar = 30;
         private bool editingFlag = false;
-        private int editingIndex;
+        private readonly int editingIndex;
 
         public PlantWindow(PlantManager currentPlantManager)
         {
@@ -38,6 +38,11 @@ namespace Csharp2_PlantingScheduler
             sowTypeComboBox.SelectionChanged += ToggleComboBoxes;
         }
 
+        /// <summary>
+        /// Second constructor if window is opened in editing mode
+        /// </summary>
+        /// <param name="currentPlantManager">The current instance of plantManager</param>
+        /// <param name="index">Index of the plant to be edited</param>
         public PlantWindow(PlantManager currentPlantManager, int index)
         {
             InitializeComponent();
@@ -50,6 +55,11 @@ namespace Csharp2_PlantingScheduler
             windowName.Content = "Editing Plant";
         }
 
+        /// <summary>
+        /// Toggles combo boxes coldstart + indoorstart upon selection of sowType
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ToggleComboBoxes(object sender, RoutedEventArgs e)
         {
             if (sowTypeComboBox.SelectedIndex == 0)
@@ -69,6 +79,10 @@ namespace Csharp2_PlantingScheduler
             }
         }
 
+        /// <summary>
+        /// Loads the properties of the plant to edit to the UI
+        /// </summary>
+        /// <param name="index">Index of the plant to edit</param>
         private void LoadPlantWhenEditing(int index)
         {
             editingFlag = true;
@@ -77,10 +91,8 @@ namespace Csharp2_PlantingScheduler
             if (plant is Vegetable veg)
             {
                 categoryComboBox.SelectedItem = veg.Category;
-                growthTypeComboBox.SelectedItem = veg.GrowthType;
                 sowTypeComboBox.SelectedItem = veg.SowType;
                 nameTxtBox.Text = veg.SpeciesName;
-                startWeekComboBox.SelectedItem = veg.BaseStartWeek;
                 weeksToHarvestComboBox.SelectedItem = veg.WeeksToHarvest;
                 coldStartComboBox.SelectedItem = veg.ColdStartWeeks;
                 indoorWeeksComboBox.SelectedItem = veg.IndoorWeeks;
@@ -91,29 +103,33 @@ namespace Csharp2_PlantingScheduler
             }
         }
 
+        /// <summary>
+        /// Initializes comboboxes and sets preselections to avoid nulls
+        /// </summary>
         private void InitComboBoxes()
         {
             categoryComboBox.ItemsSource = Enum.GetNames(typeof(Enums.PlantCategory));
-            growthTypeComboBox.ItemsSource = Enum.GetNames(typeof(Enums.GrowthType));
             sowTypeComboBox.ItemsSource = Enum.GetNames(typeof(Enums.SowType));
             typeComboBox.ItemsSource = Enum.GetNames(typeof(Enums.VegetableType));
 
             List<int> weeks = Enumerable.Range(1, 52).ToList();
-            startWeekComboBox.ItemsSource = weeks;
             weeksToHarvestComboBox.ItemsSource = weeks;
             coldStartComboBox.ItemsSource = weeks;
             indoorWeeksComboBox.ItemsSource = weeks;
 
             indoorWeeksComboBox.SelectedIndex = 0;
-            startWeekComboBox.SelectedIndex = 0;
             weeksToHarvestComboBox.SelectedIndex = 0;
             coldStartComboBox.SelectedIndex = 0;
             categoryComboBox.SelectedIndex = 1;
-            growthTypeComboBox.SelectedIndex = 0;
             sowTypeComboBox.SelectedIndex = 0;
             typeComboBox.SelectedIndex = 0;
         }
 
+        /// <summary>
+        /// Switches the content of the type combobox upon selection of category
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SwitchTypesComboBox(object sender, RoutedEventArgs e)
         {
             if (categoryComboBox.SelectedIndex == 1)
@@ -128,6 +144,11 @@ namespace Csharp2_PlantingScheduler
             typeComboBox.SelectedIndex = 0;
         }
 
+        /// <summary>
+        /// If the user wants: exits the window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ExitBtn_Click(object sender, RoutedEventArgs e)
         {
             if (MessageBoxes.DisplayQuestion("Are you sure? Unsaved changes will be lost", "Are you sure?"))
@@ -136,6 +157,11 @@ namespace Csharp2_PlantingScheduler
             }
         }
 
+        /// <summary>
+        /// Saves a new plant, or edits (replaces) the edited one
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SaveBtn_Click(object sender, RoutedEventArgs e)
         {
             string name = nameTxtBox.Text;
@@ -148,11 +174,9 @@ namespace Csharp2_PlantingScheduler
                     {
                         SpeciesName = name,
                         Category = (Enums.PlantCategory)Enum.Parse(typeof(Enums.PlantCategory), categoryComboBox.SelectedItem.ToString()!),
-                        GrowthType = (Enums.GrowthType)Enum.Parse(typeof(Enums.GrowthType), growthTypeComboBox.SelectedItem.ToString()!),
                         SowType = (Enums.SowType)Enum.Parse(typeof(Enums.SowType), sowTypeComboBox.SelectedItem.ToString()!),
                         Type = (Enums.VegetableType)Enum.Parse(typeof(Enums.VegetableType), typeComboBox.SelectedItem.ToString()!),
-                        WeeksToHarvest = (int)weeksToHarvestComboBox.SelectedItem,
-                        BaseStartWeek = (int)startWeekComboBox.SelectedItem
+                        WeeksToHarvest = (int)weeksToHarvestComboBox.SelectedItem
                     };
 
                     if (vegetable.SowType == Enums.SowType.Indoorstart)

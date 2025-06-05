@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Csharp2_PlantingScheduler.Model
 {
+    /// <summary>
+    /// Enums for this program. Names are kind of self explanatory.
+    /// </summary>
     public class Enums
     {
         public enum PlantCategory
@@ -56,6 +59,7 @@ namespace Csharp2_PlantingScheduler.Model
             Herb
         }
 
+        //Value = first frost free week (first transplant to outdoors possible)
         public enum GrowZone
         {
             Zone1 = 16,

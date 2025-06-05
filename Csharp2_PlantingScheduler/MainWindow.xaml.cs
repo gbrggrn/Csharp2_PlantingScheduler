@@ -22,14 +22,18 @@ namespace Csharp2_PlantingScheduler
         private const int weeksPerYear = months * weeksPerMonth;
 
         //Manager access
-        private GardenManager gardenManager;
-        private PlantManager plantManager;
+        private readonly GardenManager gardenManager;
+        private readonly PlantManager plantManager;
 
         //Properties
         public GardenManager GardenManager => gardenManager;
         public PlantManager PlantManager => plantManager;
         private string FilePath { get; set; }
 
+        /// <summary>
+        /// Constructor initializes the GUI, instantiates manager classes, initializes filepath
+        /// and sets the datacontext for UI binding.
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();
@@ -40,6 +44,9 @@ namespace Csharp2_PlantingScheduler
             DataContext = this;
         }
 
+        /// <summary>
+        /// Builds the schedule "skeleton" which is the basic columns and headers for the schedule programmatically
+        /// </summary>
         private void BuildScheduleSkeleton()
         {
             scheduleGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(30) });
@@ -92,6 +99,12 @@ namespace Csharp2_PlantingScheduler
             }
         }
 
+        /// <summary>
+        /// Retrieves the chosen plants and garden, calls for parsing these into schedule rows
+        /// Schedule rows are then passed to GenerateScheduleRows to visualize them
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void GenerateBtn_Click(object sender, RoutedEventArgs e)
         {
             if (gardenManager.Collection.Count > 0 && plantManager.Collection.Count > 0)
@@ -116,23 +129,33 @@ namespace Csharp2_PlantingScheduler
             }
         }
 
+        /// <summary>
+        /// Generates the schedule rows
+        /// </summary>
+        /// <param name="scheduleRows">The list of rows to be visualized</param>
         private void GenerateScheduleRows(List<ScheduleRow> scheduleRows)
         {
+            //Clear schedule
+            scheduleGrid.Children.Clear();
             scheduleGrid.RowDefinitions.Clear();
             scheduleGrid.ColumnDefinitions.Clear();
 
+            //Rebuild skeleton
             BuildScheduleSkeleton();
 
+            //Build rows
             foreach (ScheduleRow row in scheduleRows)
             {
                 scheduleGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(25) });
 
                 int currentRow = scheduleGrid.RowDefinitions.Count - 1;
 
+                //Add name/type/weeks to harvest first
                 scheduleGrid.Children.Add(CreateHeaderTextBlock(row.NameDisplay, currentRow, 0));
                 scheduleGrid.Children.Add(CreateHeaderTextBlock(row.TypeDisplay, currentRow, 1));
                 scheduleGrid.Children.Add(CreateHeaderTextBlock(row.WeeksToHarvestDisplay.ToString(), currentRow, 2));
 
+                //Generate weeks
                 for (int week = 0; week < weeksPerYear; week++)
                 {
                     Brush cellColor = Brushes.Transparent;
@@ -172,7 +195,14 @@ namespace Csharp2_PlantingScheduler
             }
         }
 
-        private TextBlock CreateHeaderTextBlock(string text, int row, int col)
+        /// <summary>
+        /// Helper for creating the header textblocks
+        /// </summary>
+        /// <param name="text">Text to be added</param>
+        /// <param name="row">Row position</param>
+        /// <param name="col">Column position</param>
+        /// <returns>The created TextBlock</returns>
+        private static TextBlock CreateHeaderTextBlock(string text, int row, int col)
         {
             TextBlock txtBlock = new()
             {
@@ -188,6 +218,11 @@ namespace Csharp2_PlantingScheduler
             return txtBlock;
         }
 
+        /// <summary>
+        /// Displays the GardenWindow
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AddGardenBtn_Click(object sender, RoutedEventArgs e)
         {
             GardenWindow gardenWindow = new(gardenManager);
@@ -195,6 +230,11 @@ namespace Csharp2_PlantingScheduler
             gardenWindow.ShowDialog();
         }
 
+        /// <summary>
+        /// Displays the PlantWindow
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AddPlantBtn_Click(object sender, RoutedEventArgs e)
         {
             PlantWindow plantWindow = new(plantManager);
@@ -202,6 +242,11 @@ namespace Csharp2_PlantingScheduler
             plantWindow.ShowDialog();
         }
 
+        /// <summary>
+        /// Opens either the garden or plant window in editing mode depending on user selection
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void EditBtn_Click(object sender, RoutedEventArgs e)
         {
             bool plantSelected = plantsLstView.SelectedItems.Count == 1;
@@ -229,6 +274,11 @@ namespace Csharp2_PlantingScheduler
             }
         }
 
+        /// <summary>
+        /// Exits the application if the user wants to
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ExitBtn_Click(Object sender, RoutedEventArgs e)
         {
             if (MessageBoxes.DisplayQuestion("Are you sure? Unsaved changes will be lost", "Exit?"))
@@ -237,6 +287,11 @@ namespace Csharp2_PlantingScheduler
             }
         }
 
+        /// <summary>
+        /// Clears the collections and the stored file path
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void NewBtn_Click(Object sender, RoutedEventArgs e)
         {
             if (MessageBoxes.DisplayQuestion("Are you sure? Unsaved changes will be lost", "New?"))
@@ -248,9 +303,14 @@ namespace Csharp2_PlantingScheduler
             }
         }
 
+        /// <summary>
+        /// Lets the user choose a file to open and calls deserialization on it
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OpenJson_Click(Object sender, RoutedEventArgs e)
         {
-            OpenFileDialog open = new OpenFileDialog();
+            OpenFileDialog open = new();
 
             if (open.ShowDialog() == true)
             {
@@ -264,13 +324,20 @@ namespace Csharp2_PlantingScheduler
                 catch (Exception ex)
                 {
                     MessageBoxes.DisplayErrorBox($"Something went wrong \n {ex.Message}");
+                    //Reset file path if deserialization fails
+                    FilePath = string.Empty;
                 }
             }
         }
 
+        /// <summary>
+        /// Lets the user choose a file path to save to and calls serialization of plants and gardens to that file
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SaveJson_Click(Object sender, RoutedEventArgs e)
         {
-            SaveFileDialog save = new SaveFileDialog();
+            SaveFileDialog save = new();
 
             if (save.ShowDialog() == true)
             {
@@ -288,6 +355,11 @@ namespace Csharp2_PlantingScheduler
             }
         }
 
+        /// <summary>
+        /// If the user wants: deletes either a garden or a plant
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DeleteBtn_Click(object sender, RoutedEventArgs e)
         {
             bool plantSelected = plantsLstView.SelectedItems.Count == 1;
@@ -311,6 +383,12 @@ namespace Csharp2_PlantingScheduler
             }
         }
 
+        /// <summary>
+        /// If a filePath exists: saves to that filepath
+        /// If a filePath does not exist: calls SaveJson_Click
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Save_Click(object sender, RoutedEventArgs e)
         {
             if (!string.IsNullOrEmpty(FilePath))

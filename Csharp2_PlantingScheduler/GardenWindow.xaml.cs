@@ -22,9 +22,9 @@ namespace Csharp2_PlantingScheduler
     /// </summary>
     public partial class GardenWindow : Window
     {
-        private GardenManager gardenManager;
-        private int editingIndex;
-        private bool editingFlag = false;
+        private readonly GardenManager gardenManager;
+        private readonly int editingIndex;
+        private readonly bool editingFlag = false;
 
         public GardenWindow(GardenManager currentGardenManager)
         {
@@ -33,6 +33,11 @@ namespace Csharp2_PlantingScheduler
             gardenManager = currentGardenManager;
         }
 
+        /// <summary>
+        /// Second constructor if window is open for editing
+        /// </summary>
+        /// <param name="currentGardenManager">Current instance of gardenManager</param>
+        /// <param name="index">Index of garden to be edited</param>
         public GardenWindow(GardenManager currentGardenManager, int index)
         {
             InitializeComponent();
@@ -44,6 +49,10 @@ namespace Csharp2_PlantingScheduler
             windowName.Content = "Editing garden";
         }
 
+        /// <summary>
+        /// Loads properties of the garden to edit
+        /// </summary>
+        /// <param name="index">Index of the garden to edit</param>
         private void LoadGardenWhenEditing(int index)
         {
             Garden garden = gardenManager.GetAt(index);
@@ -52,6 +61,11 @@ namespace Csharp2_PlantingScheduler
             zoneComboBox.SelectedItem = garden.Zone;
         }
 
+        /// <summary>
+        /// If user wants: exits the application
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ExitBtn_Click(object sender, RoutedEventArgs e)
         {
             if (MessageBoxes.DisplayQuestion("Are you sure? Unsaved changes will be lost", "Are you sure?"))
@@ -60,13 +74,21 @@ namespace Csharp2_PlantingScheduler
             }
         }
 
+        /// <summary>
+        /// Loads the zone combobox
+        /// </summary>
         private void InitComboBoxes()
         {
             zoneComboBox.ItemsSource = Enum.GetNames(typeof(Enums.GrowZone));
             zoneComboBox.SelectedIndex = 0;
         }
 
-        private void saveBtn_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Saves a new garden - or edits an existing one
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SaveBtn_Click(object sender, RoutedEventArgs e)
         {
             string name = nameTxtBox.Text;
             Enums.GrowZone zone = (Enums.GrowZone)Enum.Parse(typeof(Enums.GrowZone), zoneComboBox.SelectedItem.ToString()!);
